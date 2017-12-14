@@ -1,7 +1,8 @@
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
-
-import 'src/todo_list/todo_list_component.dart';
+import 'package:boardytale_heroes/src/components/items_component.dart';
+import 'package:boardytale_heroes/src/services/items_service.dart';
+import 'package:firebase/firebase.dart';
 
 // AngularDart info: https://webdev.dartlang.org/angular
 // Components info: https://webdev.dartlang.org/components
@@ -10,15 +11,24 @@ import 'src/todo_list/todo_list_component.dart';
   selector: 'my-app',
   styleUrls: const ['app_component.css'],
   templateUrl: 'app_component.html',
-  directives: const [materialDirectives, TodoListComponent],
-  providers: const [materialProviders],
+  directives: const [
+    materialDirectives,
+    ItemsComponent
+  ],
+  providers: const [materialProviders, ItemsService],
 )
-class AppComponent {
-  // Nothing here yet. All logic is in TodoListComponent.
+class AppComponent implements OnInit {
 
-  int j = 0;
-  AppComponent(){
-    int i = 10;
-    j = i;
+  @override
+  ngOnInit() {
+    initializeApp(
+        apiKey: "AIzaSyAbS5NovJ7w3KQElK8KcQV-8w2Ypy4NiIs",
+        authDomain: "boardytale-heroes.firebaseapp.com",
+        databaseURL: "https://boardytale-heroes.firebaseio.com",
+        storageBucket: "boardytale-heroes.appspot.com",
+        projectId: "boardytale-heroes",
+
+//        messagingSenderId: "499749973436",
+    );
   }
 }

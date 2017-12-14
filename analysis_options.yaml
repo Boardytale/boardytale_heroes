@@ -1,5 +1,8 @@
 analyzer:
   strong-mode: true
+  plugins:
+    angular:
+      enabled: true
 #   exclude:
 #     - path/to/excluded/files/**
 
