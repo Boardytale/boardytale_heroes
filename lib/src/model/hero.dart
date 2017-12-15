@@ -36,7 +36,7 @@ class Hero {
     calculated.takeBasic(this, itemSum);
     calculated.recalculateArmor(itemSum, out);
     calculated.recalculateSpeed(out);
-    out.mana = calculated.intelligence + itemSum.mana + itemSum.intelligence;
+    out.mana = calculated.intelligence + itemSum.manaBonus + itemSum.intelligenceBonus;
     recalcAttack();
     out.health = calculated.health;
   }
@@ -133,33 +133,33 @@ class HeroSettings {
 
 class HeroItemSum {
   num weight = 0;
-  num armor = 0;
-  num health = 0;
-  num mana = 0;
-  num strength = 0;
-  num agility = 0;
-  num intelligence = 0;
+  num armorPoints = 0;
+  num healthBonus = 0;
+  num manaBonus = 0;
+  num strengthBonus = 0;
+  num agilityBonus = 0;
+  num intelligenceBonus = 0;
 
   HeroItemSum();
 
   reset() {
     weight = 0;
-    armor = 0;
-    health = 0;
-    mana = 0;
-    strength = 0;
-    agility = 0;
-    intelligence = 0;
+    armorPoints = 0;
+    healthBonus = 0;
+    manaBonus = 0;
+    strengthBonus = 0;
+    agilityBonus = 0;
+    intelligenceBonus = 0;
   }
 
   add(Item item) {
     weight += item.weight;
-    armor += item.armor;
-    health += item.health;
-    mana += item.mana;
-    strength += item.strength;
-    agility += item.agility;
-    intelligence += item.intelligence;
+    armorPoints += item.armorPoints;
+    healthBonus += item.healthBonus;
+    manaBonus += item.manaBonus;
+    strengthBonus += item.strengthBonus;
+    agilityBonus += item.agilityBonus;
+    intelligenceBonus += item.intelligenceBonus;
   }
 }
 

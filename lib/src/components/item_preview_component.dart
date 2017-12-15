@@ -10,6 +10,8 @@ import 'package:boardytale_heroes/src/services/items_service.dart';
   template: '''
   
       item preview
+      
+      {{item.name}}
   
   ''',
   directives: const [
@@ -25,6 +27,9 @@ class ItemPreviewComponent implements OnInit {
   String newTodo = '';
 
   ItemPreviewComponent(this.todoListService);
+
+  @Input("item")
+  Item item;
 
   @override
   Future<Null> ngOnInit() async {

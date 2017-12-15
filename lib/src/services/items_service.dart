@@ -12,13 +12,15 @@ import 'package:firebase/src/assets/assets.dart';
 class ItemsService {
   Future<DocumentReference> createItem(Item item) async {
     return firestore().collection('items').add(item.toMap());
+  }
 
-//    firestore().collection('items').onSnapshot.listen((QuerySnapshot snapshot) {
-//      print(snapshot);
-//      snapshot.forEach((DocumentSnapshot value) {
-//        print(JSON.encode(value.data()));
-//      });
-//    });
-//    return await null;
+  Future<Stream<List<Item>>> getItems() async {
+    return firestore().collection('items').onSnapshot.map((QuerySnapshot snapshot) {
+      List<Item> out = [];
+      snapshot.forEach((DocumentSnapshot value) {
+        out.add(new Item()..fromMap(value.data()));
+      });
+      return out;
+    });
   }
 }

@@ -27,9 +27,9 @@ class HeroCalculated{
   HeroCalculated();
   
   takeBasic(Hero hero, HeroItemSum items) {
-    strength = hero.data.strength + items.strength;
-    agility = hero.data.agility + items.agility;
-    intelligence = hero.data.intelligence + items.intelligence;
+    strength = hero.data.strength + items.strengthBonus;
+    agility = hero.data.agility + items.agilityBonus;
+    intelligence = hero.data.intelligence + items.intelligenceBonus;
     bodyWeight = 55 +hero.data.strength*3;
     itemWeight = items.weight;
     weight = bodyWeight + items.weight;
@@ -38,7 +38,7 @@ class HeroCalculated{
   }
   
   void recalculateArmor(HeroItemSum items, HeroOut out) {
-      strengthOnHeightArmor = strength*20*max(items.armor,0.5)/weight;
+      strengthOnHeightArmor = strength*20*max(items.armorPoints,0.5)/weight;
       agilityOnHeightArmor = agility/pow(weight/50, 2.2);
       unflooredArmorPoints = pow(strengthOnHeightArmor+agilityOnHeightArmor,0.8);
       armorPoints = unflooredArmorPoints.floor();

@@ -15,12 +15,7 @@ import 'package:boardytale_heroes/src/services/items_service.dart';
       <item-preview *ngFor="let item of items" [item]="item"></item-preview>
   
   ''',
-  directives: const [
-    CORE_DIRECTIVES,
-    materialDirectives,
-    NewItemComponent,
-    ItemPreviewComponent
-  ],
+  directives: const [CORE_DIRECTIVES, materialDirectives, NewItemComponent, ItemPreviewComponent],
 )
 class ItemsComponent implements OnInit {
   final ItemsService itemsService;
@@ -32,6 +27,10 @@ class ItemsComponent implements OnInit {
 
   @override
   Future<Null> ngOnInit() async {
+    Stream<List<Item>> itemsData = await this.itemsService.getItems();
+    itemsData.listen((List<Item> items) {
+      this.items = items;
+    });
 //    items = await todoListService.getTodoList();
   }
 }

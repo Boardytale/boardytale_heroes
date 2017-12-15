@@ -1,40 +1,41 @@
 part of boardytale.heroes.model;
 
 class Item {
-  int id = 0;
+  String id = "noid";
   String name = "";
+  String type = "weapon";
   Hero hero;
   num weight = 0;
-  num armor = 0;
-  num health = 0;
-  num mana = 0;
-  num strength = 0;
-  num agility = 0;
-  num intelligence = 0;
+  num armorPoints = 0;
+  num healthBonus = 0;
+  num manaBonus = 0;
+  num strengthBonus = 0;
+  num agilityBonus = 0;
+  num intelligenceBonus = 0;
 
   Item() {}
 
   fromMap(Map data) {
     weight = data["weight"];
-    mana = data["mana"];
-    armor = data["armor"];
-    health = data["health"];
-    strength = data["strength"];
-    agility = data["agility"];
-    intelligence = data["intelligence"];
+    manaBonus = data["manaBonus"];
+    armorPoints = data["armorPoints"];
+    healthBonus = data["healthBonus"];
+    strengthBonus = data["strengthBonus"];
+    agilityBonus = data["agilityBonus"];
+    intelligenceBonus = data["intelligenceBonus"];
     name = data["name"];
-    id = data["id"];
+    id = data["id"].toString();
   }
 
   Map toMap() {
     return {
-      'health': health,
-      'mana': mana,
-      'armor': armor,
+      'healthBonus': healthBonus,
+      'manaBonus': manaBonus,
+      'armorPoints': armorPoints,
       'weight': weight,
-      'strength': strength,
-      'intelligence': intelligence,
-      'agility': agility,
+      'strengthBonus': strengthBonus,
+      'intelligenceBonus': intelligenceBonus,
+      'agilityBonus': agilityBonus,
       'name': name,
       'id': id
     };
