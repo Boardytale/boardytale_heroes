@@ -8,10 +8,22 @@ import 'package:boardytale_heroes/src/services/items_service.dart';
 @Component(
   selector: 'item-preview',
   template: '''
-  
-      item preview
+    <div class="item-preview">
+      <div class="item-preview__requirements">
+        <strong>{{item.name}} - {{item.type}}</strong><br>
+        <span>Hmotnost: {{item.weight}}</span>
       
-      {{item.name}}
+      </div>
+      <div class="item-preview__bonuses">
+      <strong>Bonusy:</strong><br>
+        <span>Síla: {{item.strengthBonus}}</span><br>
+        <span>Obratnost: {{item.agilityBonus}}</span><br>
+        <span>Inteligence: {{item.intelligenceBonus}}</span><br>
+        <span>Body zbroje: {{item.armorPoints}}</span><br>
+        <span>Bonusová mana: {{item.manaBonus}}</span>
+      </div>
+    
+    </div>
   
   ''',
   directives: const [

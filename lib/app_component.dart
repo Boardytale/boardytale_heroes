@@ -1,6 +1,6 @@
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
-import 'package:boardytale_heroes/src/components/items_component.dart';
+import 'package:boardytale_heroes/src/components/items/items_component.dart';
 import 'package:boardytale_heroes/src/services/items_service.dart';
 import 'package:firebase/firebase.dart';
 

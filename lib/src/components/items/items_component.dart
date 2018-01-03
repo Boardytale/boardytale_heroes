@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
-import 'package:boardytale_heroes/src/components/item_preview_component.dart';
-import 'package:boardytale_heroes/src/components/new_item_component.dart';
+import 'package:boardytale_heroes/src/components/items/item_preview_component.dart';
+import 'package:boardytale_heroes/src/components/items/new_item_component.dart';
 import 'package:boardytale_heroes/src/model/model.dart';
 import 'package:boardytale_heroes/src/services/items_service.dart';
 
