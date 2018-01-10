@@ -19,9 +19,7 @@ import 'package:boardytale_heroes/src/services/items_service.dart';
 )
 class ItemsComponent implements OnInit {
   final ItemsService itemsService;
-
   List<Item> items = [];
-  String newTodo = '';
 
   ItemsComponent(this.itemsService);
 
@@ -31,6 +29,5 @@ class ItemsComponent implements OnInit {
     itemsData.listen((List<Item> items) {
       this.items = items;
     });
-//    items = await todoListService.getTodoList();
   }
 }

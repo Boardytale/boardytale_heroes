@@ -28,7 +28,6 @@ import 'package:boardytale_heroes/src/services/items_service.dart';
   
   <button (click)="createItem()">Vytvořit</button>
   ''',
-//  <material-input label="Hmotnost" autoFocus floatingLabel style="width:80%"[(ngModel)]="weight"></material-input>
   directives: const [
     CORE_DIRECTIVES,
     materialDirectives,
