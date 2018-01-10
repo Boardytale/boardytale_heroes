@@ -11,3 +11,18 @@ body {
 * {
   font-family: Roboto, Helvetica, Arial, sans-serif;
 }
+
+.item-preview{
+  border: 1px solid black;
+  margin: 1px;
+}
+
+.item-preview__requirements{
+  width: 49%;
+  display: inline-block;
+}
+
+.item-preview__bonuses{
+  width: 49%;
+  display: inline-block;
+}
