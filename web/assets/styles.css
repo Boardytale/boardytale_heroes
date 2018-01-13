@@ -4,7 +4,7 @@
 body {
   max-width: 600px;
   margin: 0 auto;
-  padding: 5vw;
+  padding: 1vw;
   background-color: silver;
 }
 
@@ -24,5 +24,9 @@ body {
 
 .item-preview__bonuses{
   width: 49%;
+  display: inline-block;
+}
+.item-preview__weapon{
+  width: 99%;
   display: inline-block;
 }

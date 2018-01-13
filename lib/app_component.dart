@@ -1,6 +1,8 @@
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
+import 'package:boardytale_heroes/src/components/heroes/heroes_component.dart';
 import 'package:boardytale_heroes/src/components/items/items_component.dart';
+import 'package:boardytale_heroes/src/services/auth_service.dart';
 import 'package:boardytale_heroes/src/services/items_service.dart';
 import 'package:firebase/firebase.dart';
 
@@ -13,22 +15,28 @@ import 'package:firebase/firebase.dart';
   templateUrl: 'app_component.html',
   directives: const [
     materialDirectives,
-    ItemsComponent
+    ItemsComponent,
+    HeroesComponent,
+    COMMON_DIRECTIVES,
+    CORE_DIRECTIVES
   ],
-  providers: const [materialProviders, ItemsService],
+  providers: const [
+    materialProviders,
+    ItemsService,
+    AuthService,
+  ],
 )
 class AppComponent implements OnInit {
+  AuthService authService;
+
+  AppComponent(this.authService);
 
   @override
   ngOnInit() {
-    initializeApp(
-        apiKey: "AIzaSyAbS5NovJ7w3KQElK8KcQV-8w2Ypy4NiIs",
-        authDomain: "boardytale-heroes.firebaseapp.com",
-        databaseURL: "https://boardytale-heroes.firebaseio.com",
-        storageBucket: "boardytale-heroes.appspot.com",
-        projectId: "boardytale-heroes",
 
-//        messagingSenderId: "499749973436",
-    );
+  }
+
+  void login(){
+    authService.login();
   }
 }

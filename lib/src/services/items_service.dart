@@ -15,9 +15,28 @@ class ItemsService {
     return firestore().collection('items').onSnapshot.map((QuerySnapshot snapshot) {
       List<Item> out = [];
       snapshot.forEach((DocumentSnapshot value) {
-        out.add(new Item()..fromMap(value.data()));
+        Map data = value.data();
+
+        // dirty data clearing
+        if (!Item.itemTypes.contains(data["type"])) {
+          data["type"] = Weapon.typeName;
+        }
+
+        if (data["type"] == Weapon.typeName) {
+          out.add(new Weapon()
+            ..fromMap(value.data())
+            ..id = value.id);
+        } else {
+          out.add(new Item()
+            ..fromMap(value.data())
+            ..id = value.id);
+        }
       });
       return out;
     });
+  }
+
+  void delete(Item item) {
+    firestore().collection('items').doc(item.id).delete();
   }
 }

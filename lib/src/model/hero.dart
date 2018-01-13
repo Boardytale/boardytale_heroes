@@ -1,7 +1,8 @@
 part of boardytale.heroes.model;
 
 class Hero {
-  num id = 0;
+  String id = "noid";
+  String userId;
   HeroData data = new HeroData();
   List<Item> items = new List<Item>();
   List<Ability> abilities = new List<Ability>();
@@ -46,15 +47,15 @@ class Hero {
     double dmg;
     List<int> mask;
     if (weapon != null) {
-      weapon.recalculate();
-      calculated.suitability = (weapon.impactedSuitabilityMatch + 0.1) / 1.1;
-      calculated.usability = (weapon.impactedUsabilityMatch + 0.1) / 1.1;
-      pp = weapon.precision.toDouble();
-      mask = weapon.mask;
-      dmg = weapon.damage.toDouble();
-      dmg += (weapon.agilityUse * calculated.agility) / 100;
-      dmg += (weapon.strengthUse * calculated.strength) / 100;
-      dmg += (weapon.intelligenceUse * calculated.intelligence) / 100;
+//      weapon.recalculate();
+//      calculated.suitability = (weapon.impactedSuitabilityMatch + 0.1) / 1.1;
+//      calculated.usability = (weapon.impactedUsabilityMatch + 0.1) / 1.1;
+//      pp = weapon.precision.toDouble();
+//      mask = weapon.mask;
+//      dmg = weapon.damage.toDouble();
+//      dmg += (weapon.agilityUse * calculated.agility) / 100;
+//      dmg += (weapon.strengthUse * calculated.strength) / 100;
+//      dmg += (weapon.intelligenceUse * calculated.intelligence) / 100;
     } else {
       pp = 0.0;
       calculated.suitability = 0;
@@ -119,6 +120,17 @@ class Hero {
     }
     calculated.damage = dmg;
     out.attack = attack;
+  }
+
+  Map<String, dynamic> toMap() {
+    Map out = {};
+    out["id"] = id;
+    out["userId"]= userId;
+    return out;
+  }
+
+  fromMap(Map<String, dynamic> data) {
+    userId = data["userId"];
   }
 }
 

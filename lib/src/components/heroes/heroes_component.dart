@@ -9,13 +9,10 @@ import 'package:boardytale_heroes/src/model/model.dart';
 import 'package:boardytale_heroes/src/services/items_service.dart';
 
 @Component(
-  selector: 'items',
+  selector: 'heroes',
   template: '''
-    <button *ngIf="!createItemActive && !createWeaponActive" (click)="createItemActive = true">Vytvoř zbroj</button>
-    <button *ngIf="!createItemActive && !createWeaponActive" (click)="createWeaponActive = true">Vytvoř zbraň</button>
-    <new-item *ngIf="createItemActive" (onNewItem)="onNewItem()"></new-item>
-    <new-weapon *ngIf="createWeaponActive" (onNewItem)="onNewItem()"></new-weapon>
-    <item-preview *ngFor="let item of items" [item]="item"></item-preview>
+
+heroes
   ''',
   directives: const [
     CORE_DIRECTIVES,
@@ -24,13 +21,13 @@ import 'package:boardytale_heroes/src/services/items_service.dart';
     NewWeaponComponent,
     ItemPreviewComponent],
 )
-class ItemsComponent implements OnInit {
+class HeroesComponent implements OnInit {
   final ItemsService itemsService;
   List<Item> items = [];
   bool createItemActive = false;
   bool createWeaponActive = false;
 
-  ItemsComponent(this.itemsService);
+  HeroesComponent(this.itemsService);
 
   void onNewItem() {
     createItemActive = false;
