@@ -30,3 +30,9 @@ body {
   width: 99%;
   display: inline-block;
 }
+
+heroes{
+  border: 1px solid black;
+  margin: 1px;
+  padding: 1px;
+}

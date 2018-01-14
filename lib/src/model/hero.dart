@@ -3,6 +3,7 @@ part of boardytale.heroes.model;
 class Hero {
   String id = "noid";
   String userId;
+  String name = "";
   HeroData data = new HeroData();
   List<Item> items = new List<Item>();
   List<Ability> abilities = new List<Ability>();
@@ -126,11 +127,13 @@ class Hero {
     Map out = {};
     out["id"] = id;
     out["userId"]= userId;
+    out["name"] = name;
     return out;
   }
 
   fromMap(Map<String, dynamic> data) {
     userId = data["userId"];
+    name = data["name"];
   }
 }
 

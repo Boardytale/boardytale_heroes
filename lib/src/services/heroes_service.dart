@@ -10,18 +10,23 @@ import 'package:firebase/src/firestore.dart';
 class HeroesService {
   AuthService authService;
 
+  HeroesService(this.authService) {}
 
-  HeroesService(this.authService){
-
-  }
-
-  Future<DocumentReference> createHero(Hero hero) async {
+  Future<DocumentReference> createOrEditHero(Hero hero) async {
     hero.userId = authService.user.uid;
-    return firestore().collection('items').add(hero.toMap());
+    if (hero.id == "noid") {
+      return firestore().collection('heroes').add(hero.toMap());
+    } else {
+      return firestore().collection('heroes').doc(hero.id).update(data: hero.toMap());
+    }
   }
 
   Future<Stream<List<Hero>>> getHeroes() async {
-    return firestore().collection('heroes').where("userId", "==", authService.user.uid).onSnapshot.map((QuerySnapshot snapshot) {
+    return firestore()
+        .collection('heroes')
+        .where("userId", "==", authService.user.uid)
+        .onSnapshot
+        .map((QuerySnapshot snapshot) {
       List<Hero> out = [];
       snapshot.forEach((DocumentSnapshot value) {
         out.add(new Hero()
