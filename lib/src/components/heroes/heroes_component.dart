@@ -14,8 +14,14 @@ import 'package:boardytale_heroes/src/services/items_service.dart';
   selector: 'heroes',
   template: '''
   <button (click)="create()">nový hrdina</button>
-  <edit-hero *ngIf="editActive" [hero]="edited"></edit-hero>
-  <div *ngFor="let hero of heroes" [ngClass]="{'selected': edited == hero}">{{hero.name}}</div>
+  <div 
+  *ngFor="let hero of heroes"
+  [ngClass]="{'selected': heroesService.selected == hero}"
+  (click)="selectHero(hero)"
+  class="hero-button">
+    {{hero.name}}
+  </div>
+  <edit-hero *ngIf="heroesService.selected != null" [hero]="heroesService.selected"></edit-hero>
   ''',
   directives: const [
     CORE_DIRECTIVES,
@@ -29,8 +35,6 @@ import 'package:boardytale_heroes/src/services/items_service.dart';
 class HeroesComponent implements OnInit {
   final ItemsService itemsService;
   final HeroesService heroesService;
-  Hero edited = new Hero();
-  bool editActive = false;
   List<Hero> heroes = [];
 
   HeroesComponent(
@@ -47,7 +51,12 @@ class HeroesComponent implements OnInit {
   }
 
   void create() {
-    editActive = true;
+//    editActive = true;
 //    heroesService.createHero(hero);
+    heroesService.selected = new Hero();
+  }
+
+  void selectHero(Hero hero) {
+    heroesService.selected = hero;
   }
 }

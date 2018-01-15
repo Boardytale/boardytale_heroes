@@ -7,30 +7,31 @@ import 'package:firebase/src/firestore.dart';
 /// Mock service emulating access to a to-do list stored on a server.
 @Injectable()
 class ItemsService {
+  Item editingItem;
+
+  ItemsService(){
+    print("items service created");
+  }
+
   Future<DocumentReference> createItem(Item item) async {
-    return firestore().collection('items').add(item.toMap());
+    if(item.id != "noid") {
+      return firestore().collection('items').doc(item.id).update(data: item.toMap());
+    }else{
+      return firestore().collection('items').add(item.toMap());
+    }
+
   }
 
   Future<Stream<List<Item>>> getItems() async {
-    return firestore().collection('items').onSnapshot.map((QuerySnapshot snapshot) {
+    return firestore()
+        .collection('items')
+        .onSnapshot
+        .map((QuerySnapshot snapshot) {
       List<Item> out = [];
       snapshot.forEach((DocumentSnapshot value) {
         Map data = value.data();
-
-        // dirty data clearing
-        if (!Item.itemTypes.contains(data["type"])) {
-          data["type"] = Weapon.typeName;
-        }
-
-        if (data["type"] == Weapon.typeName) {
-          out.add(new Weapon()
-            ..fromMap(value.data())
-            ..id = value.id);
-        } else {
-          out.add(new Item()
-            ..fromMap(value.data())
-            ..id = value.id);
-        }
+        data["id"] = value.id;
+        out.add(_getItemByData(data));
       });
       return out;
     });
@@ -38,5 +39,38 @@ class ItemsService {
 
   void delete(Item item) {
     firestore().collection('items').doc(item.id).delete();
+  }
+
+  Future<Item> getItemById(String itemId) async {
+    return firestore()
+        .collection('items')
+        .doc(itemId)
+        .get()
+        .asStream()
+        .map((DocumentSnapshot document) {
+      Map data = document.data();
+      data["id"] = document.id;
+      return _getItemByData(data);
+    }).first;
+  }
+
+//  Future<Map<String, Item>> getItemsMap() async{
+//    Map<String, Item> out = {};
+//
+//    (await getItems()).forEach((Item item){
+////      out[item.id] = item;
+//    });
+//    return out;
+//  }
+
+  Item _getItemByData(Map data) {
+    if (!Item.itemTypes.contains(data["type"])) {
+      data["type"] = Weapon.typeName;
+    }
+    if (data["type"] == Weapon.typeName) {
+      return new Weapon()..fromMap(data);
+    } else {
+      return new Item()..fromMap(data);
+    }
   }
 }

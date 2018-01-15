@@ -28,6 +28,7 @@ class Item {
 
   Item() {}
 
+
   fromMap(Map data) {
     weight = data["weight"];
     manaBonus = data["manaBonus"];

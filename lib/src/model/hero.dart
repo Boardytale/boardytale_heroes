@@ -4,17 +4,37 @@ class Hero {
   String id = "noid";
   String userId;
   String name = "";
-  HeroData data = new HeroData();
+
+  num strength = 1;
+  int agility = 1;
+  num intelligence = 1;
+  num precision = 10;
+  num spirituality = 10;
+  num energy = 10;
+  num experience = 0;
+
+//  HeroData data = new HeroData();
   List<Item> items = new List<Item>();
   List<Ability> abilities = new List<Ability>();
   HeroOut out = new HeroOut();
-  HeroCalculated calculated = new HeroCalculated();
-  HeroItemSum itemSum = new HeroItemSum();
   HeroSettings settings = new HeroSettings();
   Weapon weapon = null;
 
+
   Hero() {
     recalc();
+  }
+
+  HeroState getState() {
+    return new HeroState(this);
+  }
+
+  ItemSum getItemSum() {
+    return new ItemSum()..addItems(items);
+  }
+
+  Weapon getWeapon() {
+    return items.firstWhere((Item i) => i is Weapon, orElse: () => null);
   }
 
   addItem([String itemData]) {
@@ -31,109 +51,76 @@ class Hero {
   }
 
   recalc() {
-    itemSum.reset();
-    for (Item item in items) {
-      itemSum.add(item);
-    }
-    calculated.takeBasic(this, itemSum);
-    calculated.recalculateArmor(itemSum, out);
-    calculated.recalculateSpeed(out);
-    out.mana = calculated.intelligence + itemSum.manaBonus + itemSum.intelligenceBonus;
-    recalcAttack();
-    out.health = calculated.health;
-  }
-
-  recalcAttack() {
-    double pp;
-    double dmg;
-    List<int> mask;
-    if (weapon != null) {
-//      weapon.recalculate();
-//      calculated.suitability = (weapon.impactedSuitabilityMatch + 0.1) / 1.1;
-//      calculated.usability = (weapon.impactedUsabilityMatch + 0.1) / 1.1;
-//      pp = weapon.precision.toDouble();
-//      mask = weapon.mask;
-//      dmg = weapon.damage.toDouble();
-//      dmg += (weapon.agilityUse * calculated.agility) / 100;
-//      dmg += (weapon.strengthUse * calculated.strength) / 100;
-//      dmg += (weapon.intelligenceUse * calculated.intelligence) / 100;
-    } else {
-      pp = 0.0;
-      calculated.suitability = 0;
-      calculated.usability = 0;
-      mask = [0, 1, 1, 1, 1, 1];
-      dmg = 1.0 + calculated.strength / 7;
-    }
-    pp += (calculated.speedPrecisionPoints * 3).toDouble();
-    pp *= 1 - calculated.suitability;
-    pp *= 1 - calculated.usability;
-    pp *= calculated.agility / calculated.strength;
-    calculated.precisionPoints = pp;
-    calculated.precision = 1;
-    if (pp > 25) {
-      calculated.precision = 5;
-      pp -= 25;
-    } else if (pp > 8) {
-      calculated.precision = 4;
-      pp -= 8;
-    } else if (pp > 4) {
-      calculated.precision = 3;
-      pp -= 4;
-    } else if (pp > 1) {
-      calculated.precision = 2;
-      pp -= 1;
-    }
-    calculated.unusedPrecisionPoints = pp;
-    pp = sqrt(pp).floor().toDouble();
-    dmg *= 1 - calculated.suitability; // desĂ­tky procent dolu
-    dmg *= 1 - calculated.usability; // desĂ­tky procent dolu
-//    dmg *= (calculated.strength + 100) / 100; // desĂ­tky procent nahoru
-//    dmg += (calculated.strength / 4).floor();
-//    dmg += (calculated.agility / 6).floor();
-
-    dmg = dmg.floor().toDouble();
-
-    var attack = [0, 0, 0, 0, 0, 0];
-
-    int maskSum = 0;
-    int prec = calculated.precision;
-    for (var i = 0; i < prec; i++) {
-      maskSum += mask[5 - i];
-    }
-    var normask = [0, 0, 0, 0, 0, 0];
-    for (var i = 0; i < 6; i++) {
-      if (i > 5 - prec) {
-        normask[i] = mask[i] ~/ maskSum;
-      }
-    }
-    for (int i = 0; i < attack.length; i++) {
-      attack[i] = (dmg * normask[i]).floor();
-      if (attack[i] == 0 && normask[i] > 0) {
-        attack[i] = 1;
-      }
-    }
-    int sum = 0;
-    for (int i = 0; i < attack.length; i++) {
-      sum += attack[i];
-    }
-    for (int i = 0; i < dmg - sum; i++) {
-      attack[5 - i]++;
-    }
-    calculated.damage = dmg;
-    out.attack = attack;
+//    itemSum.reset();
+//    for (Item item in items) {
+//      itemSum.add(item);
+//    }
+////    calculated.takeBasic(this, itemSum);
+//    calculated.recalculateArmor(itemSum, out);
+//    calculated.recalculateSpeed(out);
+//    out.mana =
+//        calculated.intelligence + itemSum.manaBonus + itemSum.intelligenceBonus;
+//    recalcAttack();
+//    out.health = calculated.health;
   }
 
   Map<String, dynamic> toMap() {
     Map out = {};
     out["id"] = id;
-    out["userId"]= userId;
+    out["userId"] = userId;
     out["name"] = name;
+    out["agility"] = agility;
+    out["strength"] = strength;
+    out["intelligence"] = intelligence;
+    out["spirituality"] = spirituality;
+    out["energy"] = energy;
+    out["precision"] = precision;
+    out["items"] = items.map((Item i) => i.id).toList();
     return out;
   }
 
-  fromMap(Map<String, dynamic> data) {
+  fromMap(Map<String, dynamic> data, ItemsService itemsService) {
     userId = data["userId"];
     name = data["name"];
+    agility = data["agility"];
+    strength = data["strength"];
+    intelligence = data["intelligence"];
+
+    spirituality = data["spirituality"];
+    energy = data["energy"];
+    precision = data["precision"];
+
+    List<String> itemsInput = data["items"];
+    if (itemsInput == null) {
+      itemsInput = [];
+    }
+
+    items.clear();
+    itemsInput.forEach((String itemId) {
+      itemsService.getItemById(itemId).then((Item item) {
+        items.add(item);
+      });
+    });
+
+    // dirty data check
+    if (agility == null) {
+      agility = 1;
+    }
+    if (strength == null) {
+      strength = 1;
+    }
+    if (intelligence == null) {
+      intelligence = 1;
+    }
+    if (spirituality == null) {
+      spirituality = 1;
+    }
+    if (energy == null) {
+      energy = 1;
+    }
+    if (precision == null) {
+      precision = 1;
+    }
   }
 }
 
@@ -144,38 +131,6 @@ class HeroSettings {
   num lastLevelMinusUsedMystical = 0;
 
   HeroSettings();
-}
-
-class HeroItemSum {
-  num weight = 0;
-  num armorPoints = 0;
-  num healthBonus = 0;
-  num manaBonus = 0;
-  num strengthBonus = 0;
-  num agilityBonus = 0;
-  num intelligenceBonus = 0;
-
-  HeroItemSum();
-
-  reset() {
-    weight = 0;
-    armorPoints = 0;
-    healthBonus = 0;
-    manaBonus = 0;
-    strengthBonus = 0;
-    agilityBonus = 0;
-    intelligenceBonus = 0;
-  }
-
-  add(Item item) {
-    weight += item.weight;
-    armorPoints += item.armorPoints;
-    healthBonus += item.healthBonus;
-    manaBonus += item.manaBonus;
-    strengthBonus += item.strengthBonus;
-    agilityBonus += item.agilityBonus;
-    intelligenceBonus += item.intelligenceBonus;
-  }
 }
 
 class HeroOut {

@@ -8,6 +8,7 @@ import 'package:angular_components/material_input/material_number_accessor.dart'
 
 import 'package:angular_forms/src/directives.dart';
 
+import 'package:boardytale_heroes/src/components/shared/attack_component.dart';
 import 'package:boardytale_heroes/src/services/items_service.dart';
 
 import 'package:angular/src/core/metadata/lifecycle_hooks.dart';
@@ -47,16 +48,16 @@ import 'package:angular_forms/angular_forms.dart';
     </span>
     
     <span>
-      Využití inteligence: <input type="number" [(ngModel)]="newItem.intelligencePoints" step="1"><br>
+      Efektivní inteligence: <input type="number" [(ngModel)]="newItem.effectiveIntelligence" step="1"><br>
     </span>
     <span>
-      Využití síly: <input type="number" [(ngModel)]="newItem.strengthPoints" step="1"><br>
+      Efektivní síla: <input type="number" [(ngModel)]="newItem.effectiveStrength" step="1"><br>
     </span>
     <span>
-      Využití obratnosti: <input type="number" [(ngModel)]="newItem.agilityPoints" step="1"><br>
+      Efektivní obratnost: <input type="number" [(ngModel)]="newItem.effectiveAgility" step="1"><br>
     </span>
     <span>
-      Maska útoku: <input type="text" [(ngModel)]="attackMask" step="1"><br>
+      Maska útoku: <br><attack-input [(value)]="newItem.mask"></attack-input><br>
     </span>
   
   <button (click)="createItem()">Vytvořit</button>
@@ -65,9 +66,9 @@ import 'package:angular_forms/angular_forms.dart';
     CORE_DIRECTIVES,
     materialDirectives,
     materialNumberInputDirectives,
-    formDirectives
+    formDirectives,
+    AttackInputComponent,
   ],
-  providers: const [ItemsService],
 )
 class NewWeaponComponent implements OnInit {
   Item newItem = new Weapon();
@@ -78,18 +79,16 @@ class NewWeaponComponent implements OnInit {
   @Output("onNewItem")
   get onNewItem => _onNewItem.stream;
 
-  NewWeaponComponent(this.itemsService);
+  NewWeaponComponent(this.itemsService){
+    if(itemsService.editingItem != null){
+      newItem = itemsService.editingItem;
+    }
+  }
 
   get weight => newItem.weight.toDouble();
 
   set weight(double value) {
     newItem.weight = value.floor();
-  }
-
-  get attackMask => (newItem as Weapon).mask;
-
-  set attackMask(String value) {
-    (newItem as Weapon).mask = value.split(",").map((String item)=> int.parse(item));
   }
 
   @override
@@ -104,5 +103,6 @@ class NewWeaponComponent implements OnInit {
 
   void cancel() {
     _onNewItem.add(null);
+    itemsService.editingItem = null;
   }
 }

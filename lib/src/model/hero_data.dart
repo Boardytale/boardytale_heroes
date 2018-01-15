@@ -14,7 +14,6 @@ class HeroData {
   int floatDarkness = 0;
   int floatEnergy = 0;
   int floatPrecision = 0;
-  String name= "hrdina";
   bool actualWeaponId= false;
   int budget= 1;
   int get intelligence =>_intelligence + floatIntelligence;

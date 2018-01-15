@@ -37,7 +37,6 @@ import 'package:boardytale_heroes/src/services/items_service.dart';
     materialNumberInputDirectives,
     formDirectives
   ],
-  providers: const [ItemsService],
 )
 class NewItemComponent implements OnInit {
   Item newItem = new Item();
@@ -57,12 +56,6 @@ class NewItemComponent implements OnInit {
     newItem.weight = value.floor();
   }
 
-  get attackMask => (newItem as Weapon).mask;
-
-  set attackMask(String value) {
-    (newItem as Weapon).mask = value.split(",").map((String item)=> int.parse(item));
-  }
-
   @override
   Future<Null> ngOnInit() async {
 //    items = await todoListService.getTodoList();
@@ -75,5 +68,6 @@ class NewItemComponent implements OnInit {
 
   void cancel() {
     _onNewItem.add(null);
+    itemsService.editingItem = null;
   }
 }

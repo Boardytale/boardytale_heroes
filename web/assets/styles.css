@@ -2,10 +2,11 @@
 @import url(https://fonts.googleapis.com/css?family=Material+Icons);
 
 body {
-  max-width: 600px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 1vw;
   background-color: silver;
+  font-size: 0.7em;
 }
 
 * {
@@ -35,4 +36,16 @@ heroes{
   border: 1px solid black;
   margin: 1px;
   padding: 1px;
+}
+.selected {
+  text-decoration: underline;
+  color: red;
+}
+
+.hero-button{
+  padding: 4px;
+  margin: 4px;
+  cursor: pointer;
+  border: 1px solid black;
+  box-shadow: #0b2e13;
 }

@@ -34,11 +34,9 @@ class AppComponent implements OnInit {
   AppComponent(this.authService);
 
   @override
-  ngOnInit() {
+  ngOnInit() {}
 
-  }
-
-  void login(){
+  void login() {
     authService.login();
   }
 }

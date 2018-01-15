@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:angular/core.dart';
 import 'package:boardytale_heroes/src/model/model.dart';
 import 'package:boardytale_heroes/src/services/auth_service.dart';
+import 'package:boardytale_heroes/src/services/items_service.dart';
 import 'package:firebase/firebase.dart';
 import 'package:firebase/src/firestore.dart';
 
@@ -9,8 +10,10 @@ import 'package:firebase/src/firestore.dart';
 @Injectable()
 class HeroesService {
   AuthService authService;
+  ItemsService itemsService;
+  Hero selected;
 
-  HeroesService(this.authService) {}
+  HeroesService(this.authService, this.itemsService) {}
 
   Future<DocumentReference> createOrEditHero(Hero hero) async {
     hero.userId = authService.user.uid;
@@ -30,7 +33,7 @@ class HeroesService {
       List<Hero> out = [];
       snapshot.forEach((DocumentSnapshot value) {
         out.add(new Hero()
-          ..fromMap(value.data())
+          ..fromMap(value.data(), itemsService)
           ..id = value.id);
       });
       return out;

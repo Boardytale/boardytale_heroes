@@ -13,8 +13,8 @@ import 'package:boardytale_heroes/src/services/items_service.dart';
   template: '''
     <button *ngIf="!createItemActive && !createWeaponActive" (click)="createItemActive = true">Vytvoř zbroj</button>
     <button *ngIf="!createItemActive && !createWeaponActive" (click)="createWeaponActive = true">Vytvoř zbraň</button>
-    <new-item *ngIf="createItemActive" (onNewItem)="onNewItem()"></new-item>
-    <new-weapon *ngIf="createWeaponActive" (onNewItem)="onNewItem()"></new-weapon>
+    <new-item *ngIf="createItemActive || itemIsEdited" (onNewItem)="onNewItem()"></new-item>
+    <new-weapon *ngIf="createWeaponActive || weaponIsEdited" (onNewItem)="onNewItem()"></new-weapon>
     <item-preview *ngFor="let item of items" [item]="item"></item-preview>
   ''',
   directives: const [
@@ -29,6 +29,9 @@ class ItemsComponent implements OnInit {
   List<Item> items = [];
   bool createItemActive = false;
   bool createWeaponActive = false;
+
+  bool get weaponIsEdited => itemsService.editingItem is Weapon;
+  bool get itemIsEdited => itemsService.editingItem != null && itemsService.editingItem is !Weapon;
 
   ItemsComponent(this.itemsService);
 

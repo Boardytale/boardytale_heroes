@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:boardytale_heroes/src/model/model.dart';
+import 'package:boardytale_heroes/src/services/heroes_service.dart';
 import 'package:boardytale_heroes/src/services/items_service.dart';
 
 @Component(
@@ -14,11 +15,13 @@ import 'package:boardytale_heroes/src/services/items_service.dart';
         <span>Hmotnost: {{item.weight}}</span><br>
         <span *ngIf="item.type == 'weapon'">Útočnost: {{item.damage}}</span><br>
         <span *ngIf="item.type == 'weapon'">Rozsah útoku: {{item.precision}}</span><br>
-        <span *ngIf="item.type == 'weapon'">Profil síly: {{item.strengthPoints}}</span><br>
-        <span *ngIf="item.type == 'weapon'">Profil obratnosti: {{item.agilityPoints}}</span><br>
-        <span *ngIf="item.type == 'weapon'">Profil inteligence: {{item.intelligencePoints}}</span><br>
+        <span *ngIf="item.type == 'weapon'">Efektivní síla: {{item.effectiveStrength}}</span><br>
+        <span *ngIf="item.type == 'weapon'">Efektivní obratnost: {{item.effectiveAgility}}</span><br>
+        <span *ngIf="item.type == 'weapon'">Efektivní inteligence: {{item.effectiveIntelligence}}</span><br>
         <span *ngIf="item.type == 'weapon'">Maska útoku: {{item.mask}}</span><br>
         <button (click)="delete()">Vymaž</button>
+        <button (click)="edit()">Uprav</button>
+        <button *ngIf="heroesService.selected != null" (click)="addToHero()">Přidej označenému hrdinovi</button>
       
       </div>
       <div class="item-preview__bonuses">
@@ -39,15 +42,14 @@ import 'package:boardytale_heroes/src/services/items_service.dart';
     CORE_DIRECTIVES,
     materialDirectives,
   ],
-  providers: const [ItemsService],
 )
 class ItemPreviewComponent implements OnInit {
-  final ItemsService itemsService;
-
+  ItemsService itemsService;
+  HeroesService heroesService;
   List<Item> items = [];
   String newTodo = '';
 
-  ItemPreviewComponent(this.itemsService);
+  ItemPreviewComponent(this.itemsService, this.heroesService);
 
   @Input("item")
   Item item;
@@ -59,5 +61,14 @@ class ItemPreviewComponent implements OnInit {
 
   void delete() {
     itemsService.delete(item);
+  }
+
+  void edit() {
+    itemsService.editingItem = item;
+  }
+
+  void addToHero() {
+    heroesService.selected.items.add(item);
+    heroesService.createOrEditHero(heroesService.selected);
   }
 }
