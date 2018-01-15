@@ -47,7 +47,6 @@ class ItemPreviewComponent implements OnInit {
   ItemsService itemsService;
   HeroesService heroesService;
   List<Item> items = [];
-  String newTodo = '';
 
   ItemPreviewComponent(this.itemsService, this.heroesService);
 

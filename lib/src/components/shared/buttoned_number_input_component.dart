@@ -9,7 +9,6 @@ import 'package:angular_forms/angular_forms.dart';
 @Component(
   selector: 'buttoned-input',
   template: '''
-  buttoned
   <button *ngIf="decimal" (click)="decreaseDecimal()">--</button>
   <button (click)="decrease()">-</button>
   {{value}}
