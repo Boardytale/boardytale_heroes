@@ -22,7 +22,8 @@ import 'package:boardytale_heroes/src/services/items_service.dart';
     materialDirectives,
     NewItemComponent,
     NewWeaponComponent,
-    ItemPreviewComponent],
+    ItemPreviewComponent
+  ],
 )
 class ItemsComponent implements OnInit {
   final ItemsService itemsService;
@@ -31,7 +32,9 @@ class ItemsComponent implements OnInit {
   bool createWeaponActive = false;
 
   bool get weaponIsEdited => itemsService.editingItem is Weapon;
-  bool get itemIsEdited => itemsService.editingItem != null && itemsService.editingItem is !Weapon;
+
+  bool get itemIsEdited =>
+      itemsService.editingItem != null && itemsService.editingItem is! Weapon;
 
   ItemsComponent(this.itemsService);
 

@@ -11,21 +11,23 @@ class HeroState {
   int precision = 0;
   num baseHealth = 0;
   num armorHealth = 0;
-  int armorPoints = 0;
+  num unusedSpeedPointsHealth = 0;
+  num unusedPrecisionHealth = 0;
+  num armorPoints = 0;
   num unflooredArmorPoints = 0;
-  num strengthOnHeightArmor = 0;
-  num agilityOnHeightArmor = 0;
+  num fatWeight = 0;
+  num agilityArmorPoints = 0;
+  num itemsArmorPoints = 0;
+  num precisionOnAgilityAndStrength = 0;
   num speedPoints = 1;
-  num speedPrecisionPoints = 0;
   num precisionPoints = 0;
-  num unusedPrecisionPoints = 0;
   int itemWeight = 0;
-  num damage = 1;
-  num dmgPoints = 0;
+  num levelDamage = 0;
   num suitability = 1;
   num usability = 1;
   num armor = 0;
   num speed = 1;
+  num mana = 0;
   List<int> attack = [0, 0, 0, 0, 0, 0];
   num health;
   num efficiency = 1;
@@ -40,33 +42,36 @@ class HeroState {
     weight = bodyWeight + items.weight;
     level = (pow(hero.experience, 0.65) / 4).floor();
     baseHealth = 6 + (strength / 2).floor();
-
+    mana = intelligence + items.manaBonus;
     recalculateArmor(items);
-
-    health = baseHealth + armorHealth + items.healthBonus;
-
     recalculateSpeed();
     recalculateAttack();
+
+    health = (baseHealth +
+            armorHealth +
+            items.healthBonus +
+            unusedPrecisionHealth +
+            unusedSpeedPointsHealth)
+        .floor();
   }
 
   void recalculateArmor(ItemSum items) {
-    strengthOnHeightArmor =
-        strength * 20 * max(items.armorPoints, 0.5) / weight;
-    agilityOnHeightArmor = agility / pow(weight / 50, 2.2);
-    unflooredArmorPoints =
-        pow(strengthOnHeightArmor + agilityOnHeightArmor, 0.8);
-    armorPoints = unflooredArmorPoints.floor();
+    fatWeight = weight / strength;
+//        strength * 20 * max(items.armorPoints, 0.5) / weight;
+    agilityArmorPoints = max(0, (5 * agility) - fatWeight);
+    itemsArmorPoints = items.armorPoints;
+    armorPoints = sqrt(itemsArmorPoints + agilityArmorPoints);
     armorHealth = armorPoints;
-    if (armorHealth > 7) {
+    if (armorHealth > 20) {
       armor = 4;
-      armorHealth -= 8;
-    } else if (armorHealth > 5) {
+      armorHealth -= 20;
+    } else if (armorHealth > 10) {
       armor = 3;
-      armorHealth -= 6;
-    } else if (armorHealth > 3) {
+      armorHealth -= 10;
+    } else if (armorHealth > 5) {
       armor = 2;
-      armorHealth -= 4;
-    } else if (armorHealth > 1) {
+      armorHealth -= 3;
+    } else if (armorHealth > 2) {
       armor = 1;
       armorHealth -= 2;
     } else {
@@ -80,29 +85,27 @@ class HeroState {
     var c = 2;
     var d = 2.9;
     var weight = this.weight - 30;
-    var points = log(a * strength / weight +
+    speedPoints = log(a * strength / weight +
             b * pow(strength, 2) * pow(agility, 2) / pow(weight, 2) +
             c) *
         d;
-    speedPoints = points;
-    var stops = [1, 2, 3, 4, 5, 6, 7];
+    var stops = [1, 2, 3, 5, 9, 15, 25, 10000];
     var i = 0;
-    while (stops[i] < points) {
+    while (stops[i] < speedPoints) {
       i++;
     }
     speed = i;
-    speedPrecisionPoints = points - stops[i - 1];
+    unusedSpeedPointsHealth = speedPoints - stops[i - 1];
   }
 
   recalculateAttack() {
-    double pp;
-    double dmg;
-    List<int> mask;
     Weapon weapon = hero.getWeapon();
+    List<int> workingAttack = [0, 0, 0, 1, 1, 1];
     if (weapon != null) {
+      workingAttack = weapon.baseAttack.toList();
       num intelligenceDistance = null;
       num strengthDistance = null;
-      num agilityDistance;
+      num agilityDistance = null;
 
       if (weapon.effectiveIntelligence > intelligence) {
         num iPoint1 = intelligence;
@@ -122,7 +125,7 @@ class HeroState {
             weapon.effectiveStrength * strength / weapon.effectiveStrength;
         num iPoint3 =
             weapon.effectiveAgility * strength / weapon.effectiveStrength;
-        intelligenceDistance =
+        strengthDistance =
             sqrt(pow(iPoint1, 2) + pow(iPoint2, 2) + pow(iPoint3, 2));
       }
 
@@ -132,7 +135,7 @@ class HeroState {
             weapon.effectiveStrength * agility / weapon.effectiveAgility;
         num iPoint3 =
             weapon.effectiveAgility * agility / weapon.effectiveAgility;
-        intelligenceDistance =
+        agilityDistance =
             sqrt(pow(iPoint1, 2) + pow(iPoint2, 2) + pow(iPoint3, 2));
       }
 
@@ -153,67 +156,62 @@ class HeroState {
           efficiency > agilityDistance / fullDistance) {
         efficiency = agilityDistance / fullDistance;
       }
-
-      pp = weapon.precision.toDouble();
-      mask = weapon.mask;
-      dmg = weapon.damage.toDouble() * efficiency;
+      precisionPoints = weapon.precision.toDouble();
     } else {
-      pp = 0.0;
-      mask = [0, 1, 1, 1, 1, 1];
-      dmg = 1.0 + strength / 7;
+      precisionPoints = 1.0;
     }
-    pp += (speedPrecisionPoints * 3).toDouble();
-    pp *= agility / strength;
-    precisionPoints = pp;
+    precisionOnAgilityAndStrength = 0;
+    precisionOnAgilityAndStrength += agility;
+    precisionOnAgilityAndStrength += 0.2 * strength;
+    precisionOnAgilityAndStrength *= agility / strength;
+    precisionPoints = sqrt(precisionPoints + precisionOnAgilityAndStrength);
     precision = 1;
-    if (pp > 25) {
+    if (precisionPoints > 6) {
       precision = 5;
-      pp -= 25;
-    } else if (pp > 8) {
+      precisionPoints -= 6;
+    } else if (precisionPoints > 3) {
       precision = 4;
-      pp -= 8;
-    } else if (pp > 4) {
+      precisionPoints -= 3;
+    } else if (precisionPoints > 2) {
       precision = 3;
-      pp -= 4;
-    } else if (pp > 1) {
+      precisionPoints -= 2;
+    } else if (precisionPoints > 1) {
       precision = 2;
-      pp -= 1;
+      precisionPoints -= 1;
     }
-    unusedPrecisionPoints = pp;
-    pp = sqrt(pp).floor().toDouble();
-    dmg = dmg.floor().toDouble();
+    unusedPrecisionHealth = precisionPoints;
+    double unusedDamage =
+        _applyWeaponEfficiency(workingAttack, efficiency).toDouble();
+    // take damage on no precision positions
+    for (var i = 0; i < 6 - precision; i++) {
+      unusedDamage += workingAttack[i];
+      workingAttack[i] = 0;
+    }
+    levelDamage = pow(level, 0.7);
+    unusedDamage += levelDamage;
 
-    attack = [0, 0, 0, 0, 0, 0];
-
-    int maskSum = 0;
-    int prec = precision;
-    for (var i = 0; i < prec; i++) {
-      maskSum += mask[5 - i];
-    }
-    if (maskSum == 0) {
-      maskSum = 6;
-      mask = [1, 1, 1, 1, 1, 1];
-    }
-    var normask = [0, 0, 0, 0, 0, 0];
-    for (var i = 0; i < 6; i++) {
-      if (i > 5 - prec) {
-        normask[i] = mask[i] ~/ maskSum;
+    // fill precision with priority
+    for (var i = 6 - precision; i < 6; i++) {
+      if(unusedDamage > 1 && workingAttack[i] == 0){
+        workingAttack[i] = 1;
+        unusedDamage--;
       }
     }
-    for (int i = 0; i < attack.length; i++) {
-      attack[i] = (dmg * normask[i]).floor();
-      if (attack[i] == 0 && normask[i] > 0) {
-        attack[i] = 1;
-      }
+
+    // divine unused damage
+    for (int i = 0; i < unusedDamage - 1; i++) {
+      workingAttack[5 - i % precision]++;
     }
-    int sum = 0;
-    for (int i = 0; i < attack.length; i++) {
-      sum += attack[i];
+    attack = workingAttack;
+  }
+
+  double _applyWeaponEfficiency(List<int> baseAttack, double efficiency) {
+    double out = 0.0;
+    for (int i = 0; i < baseAttack.length; i++) {
+      double reduced = baseAttack[i] * efficiency;
+      out += reduced.remainder(1);
+      baseAttack[i] = reduced.floor();
     }
-    for (int i = 0; i < dmg - sum; i++) {
-      attack[5 - i%5]++;
-    }
-    damage = dmg;
-    attack = attack;
+    return out;
   }
 }

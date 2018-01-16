@@ -45,12 +45,11 @@ import 'package:angular_forms/angular_forms.dart';
     <div class="col-4">
     <h3>Zbraň</h3>
       Název: {{hero.getWeapon()?.name}}<br>
-      Útočnost: {{hero.getWeapon()?.damage}}<br>
-      Rozsah: {{hero.getWeapon()?.precision}}<br>
+      Body přesnosti: {{hero.getWeapon()?.precision}}<br>
       Efektivní síla: {{hero.getWeapon()?.effectiveStrength}}<br>
-      Efektivní obratnost: {{hero.getWeapon()?.effectiveIntelligence}}<br>
-      Efektivní inteligence: {{hero.getWeapon()?.effectiveAgility}}<br>
-      Maska útoku: {{hero.getWeapon()?.mask}}<br>
+      Efektivní inteligence: {{hero.getWeapon()?.effectiveIntelligence}}<br>
+      Efektivní obratnost: {{hero.getWeapon()?.effectiveAgility}}<br>
+      Základní útok: {{hero.getWeapon()?.baseAttack}}<br>
       <button (click)="removeWeapon()">Odebrat</button>
     
     </div>
@@ -60,13 +59,11 @@ import 'package:angular_forms/angular_forms.dart';
     <h3>Mezivýpočty</h3>
         Tělesná hmotnost: {{hero.getState().bodyWeight}}<br>
         Hmotnost výbavy: {{hero.getState().itemWeight}}<br>
-        Hmotnost celkem: {{hero.getState().weight}}<br>
+        Mana: {{hero.getState().mana}}<br>
         Obratnost: {{hero.getState().agility}}<br>
         Síla: {{hero.getState().strength}}<br>
         Inteligence: {{hero.getState().intelligence}}<br>
         Základ počtu životů (6 + 2*síla): {{hero.getState().baseHealth}}<br>
-        Bonus životů z nevyužitých bodů zbroje: {{hero.getState().armorHealth}} <br>
-        Efektivita zbraně: {{hero.getState().efficiency}} <br>
     </div>
     <div class="col-4">
     <h3>Postava</h3>
@@ -78,7 +75,47 @@ import 'package:angular_forms/angular_forms.dart';
     </div>
     <div class="col-4">
     <h3>Seznam vybavení</h3>
-       <div *ngFor="let item of hero.items">{{item.name}}<button (click)="removeItem(item)">Odebrat</button></div>
+       <div *ngFor="let item of hero.items">{{item.name}} - {{item.getType()}}<button (click)="removeItem(item)">Odebrat</button></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-3">
+    <h3>Rychlost</h3>
+        Hmotnost: {{hero.getState().weight}}<br>
+        Obratnost: {{hero.getState().agility}}<br>
+        Síla: {{hero.getState().strength}}<br>
+        Body rychlosti: {{hero.getState().speedPoints.toStringAsFixed(2)}}<br>
+        Rychlost: {{hero.getState().speed}}<br>
+        Životy: {{hero.getState().unusedSpeedPointsHealth.toStringAsFixed(2)}}<br>
+    </div>
+    <div class="col-3">
+    <h3>Zbroj</h3>
+        Hmotnost: {{hero.getState().weight}}<br>
+        Síla: {{hero.getState().strength}}<br>
+        Obratnost: {{hero.getState().agility}}<br>
+        Postih hmotností: {{hero.getState().fatWeight.toStringAsFixed(2)}}<br>
+        Body z obratnosti: {{hero.getState().agilityArmorPoints.toStringAsFixed(2)}}<br>
+        Body zbroje: {{hero.getState().armorPoints.toStringAsFixed(2)}}<br>
+        Zbroj: {{hero.getState().armor}}<br>
+        Životy: {{hero.getState().armorHealth.toStringAsFixed(2)}}<br>
+    </div>
+    <div class="col-3">
+    <h3>Rozsah útoku</h3>
+     Přesnost zbraně: {{hero.getWeapon()?.precision}}<br>
+     Síla a obratnost: {{hero.getState().precisionOnAgilityAndStrength.toStringAsFixed(2)}}<br>
+     Body přesnosti: {{hero.getState().precisionPoints.toStringAsFixed(2)}}<br>
+     Přesnost: {{hero.getState().precision}}<br>
+     Životy: {{hero.getState().unusedPrecisionHealth.toStringAsFixed(2)}}<br>
+    </div>
+    <div class="col-3">
+    <h3>Síla útoku</h3>
+     Obratnost: {{hero.getState().agility}}<br>
+     Síla: {{hero.getState().strength}}<br>
+     Inteligence: {{hero.getState().intelligence}}<br>
+     Úroveň: {{hero.getState().level}}<br>
+     Útok na úroveň: {{hero.getState().levelDamage.toStringAsFixed(2)}}<br>
+     Efektivita: {{hero.getState().efficiency.toStringAsFixed(2)}} <br>
+     Základní útok: {{hero.getWeapon()?.baseAttack}}<br>
     </div>
   </div>
   <br>
@@ -91,11 +128,10 @@ import 'package:angular_forms/angular_forms.dart';
     materialNumberInputDirectives,
     formDirectives,
     ButtonedNumberInputComponent
-  ],
-  providers: const [ItemsService],
+  ]
 )
 class EditHeroComponent {
-  @Input("hero")
+  @Input()
   Hero hero = new Hero();
 
   HeroesService heroService;

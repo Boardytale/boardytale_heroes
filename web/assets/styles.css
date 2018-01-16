@@ -49,3 +49,10 @@ heroes{
   border: 1px solid black;
   box-shadow: #0b2e13;
 }
+
+attack-input button {
+  width: 20px;
+  height: 20px;
+  margin: 1px;
+  padding: 1px;
+}

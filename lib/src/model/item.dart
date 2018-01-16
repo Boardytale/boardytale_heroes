@@ -13,7 +13,7 @@ class Item {
   ];
   String id = "noid";
   String name = "";
-  String type = "weapon";
+  String type = "body";
   Hero hero;
   num weight = 0;
   num armorPoints = 0;
@@ -28,6 +28,18 @@ class Item {
 
   Item() {}
 
+  String getType() {
+    return {
+    "weapon": "Zbraň",
+    "helm": "Přilba",
+    "gauntlet": "Rukavice",
+    "body": "Zbroj na tělo",
+    "boots": "Boty",
+    "ring": "Prsten",
+    "amulet": "Amulet",
+    "shield": "Štít"
+    }[type];
+  }
 
   fromMap(Map data) {
     weight = data["weight"];
@@ -41,6 +53,7 @@ class Item {
     precisionBonus = data["precisionBonus"];
     energyBonus = data["energyBonus"];
     name = data["name"];
+    type = data["type"];
     id = data["id"].toString();
   }
 
@@ -57,6 +70,7 @@ class Item {
       'precisionBonus': precisionBonus,
       'energyBonus': energyBonus,
       'name': name,
+      'type': type,
       'id': id
     };
   }

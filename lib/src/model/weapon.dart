@@ -2,16 +2,14 @@ part of boardytale.heroes.model;
 
 class Weapon extends Item {
   static const String typeName = "weapon";
-  num damage = 1;
   num precision = 1;
   num effectiveStrength = 1;
   num effectiveIntelligence = 1;
   num effectiveAgility = 1;
-  List<int> mask = [0, 0, 0, 0, 0, 0];
+  List<int> baseAttack = [0, 0, 0, 0, 0, 0];
 
   void fromMap(Map data) {
     super.fromMap(data);
-    damage = data["damage"];
     precision = data["precision"];
     if (data["effectiveStrength"] is num) {
       effectiveStrength = data["effectiveStrength"];
@@ -22,18 +20,17 @@ class Weapon extends Item {
     if (data["effectiveAgility"] is num) {
       effectiveAgility = data["effectiveAgility"];
     }
-    mask = data["mask"];
+    baseAttack = data["baseAttack"];
   }
 
   Map toMap() {
     Map out = super.toMap();
     out.addAll({
-      'damage': damage,
       'precision': precision,
       'effectiveStrength': effectiveStrength,
       'effectiveIntelligence': effectiveIntelligence,
       'effectiveAgility': effectiveAgility,
-      'mask': mask
+      'baseAttack': baseAttack
     });
     return out;
   }

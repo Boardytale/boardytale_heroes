@@ -37,14 +37,9 @@ import 'package:angular_forms/angular_forms.dart';
   Bonus spirituality: <input type="number" [(ngModel)]="newItem.spiritualityBonus" step="1"><br>
   Bonus přestnosti: <input type="number" [(ngModel)]="newItem.precisionBonus" step="1"><br>
   Bonus energie: <input type="number" [(ngModel)]="newItem.energyBonus" step="1"><br>
-  
     
     <span>
-      Útočnost: <input type="number" [(ngModel)]="newItem.damage" step="1"><br>
-    </span>
-    
-    <span>
-      Rozsah: <input type="number" [(ngModel)]="newItem.precision" step="1"><br>
+      Body přesnosti: <input type="number" [(ngModel)]="newItem.precision" step="1"><br>
     </span>
     
     <span>
@@ -57,10 +52,10 @@ import 'package:angular_forms/angular_forms.dart';
       Efektivní obratnost: <input type="number" [(ngModel)]="newItem.effectiveAgility" step="1"><br>
     </span>
     <span>
-      Maska útoku: <br><attack-input [(value)]="newItem.mask"></attack-input><br>
+      Základní útok: <br><attack-input [(value)]="newItem.baseAttack"></attack-input><br>
     </span>
   
-  <button (click)="createItem()">Vytvořit</button>
+  <button (click)="createItem()">{{newItem.id == "noid"?"Vytvořit": "Upravit"}}</button>
   ''',
   directives: const [
     CORE_DIRECTIVES,
@@ -99,6 +94,7 @@ class NewWeaponComponent implements OnInit {
   void createItem() {
     _onNewItem.add(null);
     itemsService.createItem(newItem);
+    itemsService.editingItem = null;
   }
 
   void cancel() {

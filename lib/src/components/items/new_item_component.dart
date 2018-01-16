@@ -25,11 +25,17 @@ import 'package:boardytale_heroes/src/services/items_service.dart';
   Bonus energie: <input type="number" [(ngModel)]="newItem.energyBonus" step="1"><br>
   
   Typ předmětu:
-    <select #itemType>
-      <option value="weapon">Zbraň</option>
+    <select #itemType [(ngModel)]="newItem.type">
+      <option value="body">Zbroj na tělo</option>
+      <option value="helm">Přilba</option>
+      <option value="gauntlet">Rukavice</option>
+      <option value="boots">Boty</option>
+      <option value="ring">Prsten</option>
+      <option value="amulet">Amulet</option>
+      <option value="shield">Štít</option>
     </select>
   
-  <button (click)="createItem()">Vytvořit</button>
+  <button (click)="createItem()">{{newItem.id == "noid"?"Vytvořit": "Upravit"}}</button>
   ''',
   directives: const [
     CORE_DIRECTIVES,
@@ -48,7 +54,11 @@ class NewItemComponent implements OnInit {
   get onNewItem => _onNewItem.stream;
 
 
-  NewItemComponent(this.itemsService);
+  NewItemComponent(this.itemsService) {
+    if(itemsService.editingItem != null){
+      newItem = itemsService.editingItem;
+    }
+  }
 
   get weight => newItem.weight.toDouble();
 
@@ -64,6 +74,7 @@ class NewItemComponent implements OnInit {
   void createItem() {
     _onNewItem.add(null);
     itemsService.createItem(newItem);
+    itemsService.editingItem = null;
   }
 
   void cancel() {

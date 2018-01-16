@@ -10,19 +10,20 @@ import 'package:angular_forms/angular_forms.dart';
   selector: 'attack-input',
   template: '''
   buttoned
-  <button (click)="increase(0)">+</button>
-  <button (click)="increase(1)">+</button>
-  <button (click)="increase(2)">+</button>
-  <button (click)="increase(3)">+</button>
-  <button (click)="increase(4)">+</button>
-  <button (click)="increase(5)">+</button><br>
-  <button (click)="decrease(0)">-</button>
-  <button (click)="decrease(1)">-</button>
-  <button (click)="decrease(2)">-</button>
-  <button (click)="decrease(3)">-</button>
-  <button (click)="decrease(4)">-</button>
-  <button (click)="decrease(5)">-</button>
-  <button (click)="decrease(6)">-</button><br>
+  <div>
+    <button (click)="increase(0)">+</button>
+    <button (click)="increase(1)">+</button>
+    <button (click)="increase(2)">+</button>
+    <button (click)="increase(3)">+</button>
+    <button (click)="increase(4)">+</button>
+    <button (click)="increase(5)">+</button><br>
+    <button (click)="decrease(0)">-</button>
+    <button (click)="decrease(1)">-</button>
+    <button (click)="decrease(2)">-</button>
+    <button (click)="decrease(3)">-</button>
+    <button (click)="decrease(4)">-</button>
+    <button (click)="decrease(5)">-</button><br>
+  </div>
   {{value}}
   ''',
   directives: const [
