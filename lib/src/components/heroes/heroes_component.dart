@@ -13,14 +13,6 @@ import 'package:boardytale_heroes/src/services/items_service.dart';
 @Component(
   selector: 'heroes',
   template: '''
-  <button (click)="create()">nový hrdina</button>
-  <div 
-  *ngFor="let hero of heroes"
-  [ngClass]="{'selected': heroesService.selected == hero}"
-  (click)="selectHero(hero)"
-  class="hero-button">
-    {{hero.name}}
-  </div>
   <edit-hero *ngIf="heroesService.selected != null" [hero]="heroesService.selected"></edit-hero>
   ''',
   directives: const [
@@ -32,31 +24,9 @@ import 'package:boardytale_heroes/src/services/items_service.dart';
     EditHeroComponent
   ],
 )
-class HeroesComponent implements OnInit {
-  final ItemsService itemsService;
+class HeroesComponent {
   final HeroesService heroesService;
-  List<Hero> heroes = [];
-
   HeroesComponent(
-    this.itemsService,
     this.heroesService,
   );
-
-  @override
-  Future<Null> ngOnInit() async {
-    Stream<List<Hero>> heroesData = await this.heroesService.getHeroes();
-    heroesData.listen((List<Hero> heroes) {
-      this.heroes = heroes;
-    });
-  }
-
-  void create() {
-//    editActive = true;
-//    heroesService.createHero(hero);
-    heroesService.selected = new Hero();
-  }
-
-  void selectHero(Hero hero) {
-    heroesService.selected = hero;
-  }
 }

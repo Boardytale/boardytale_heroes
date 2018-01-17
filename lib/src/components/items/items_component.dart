@@ -15,7 +15,9 @@ import 'package:boardytale_heroes/src/services/items_service.dart';
     <button *ngIf="!createItemActive && !createWeaponActive" (click)="createWeaponActive = true">Vytvoř zbraň</button>
     <new-item *ngIf="createItemActive || itemIsEdited" (onNewItem)="onNewItem()"></new-item>
     <new-weapon *ngIf="createWeaponActive || weaponIsEdited" (onNewItem)="onNewItem()"></new-weapon>
-    <item-preview *ngFor="let item of items" [item]="item"></item-preview>
+    <div class="card-deck">
+      <item-preview *ngFor="let item of items" [item]="item"  class="col-4 item-tile"></item-preview>
+    </div>
   ''',
   directives: const [
     CORE_DIRECTIVES,

@@ -52,4 +52,8 @@ class AppComponent implements OnInit {
   void selectHero(Hero hero) {
     heroesService.selected = hero;
   }
+
+  void create() {
+    heroesService.selected = new Hero();
+  }
 }
