@@ -4,12 +4,14 @@ import 'package:angular/core.dart';
 import 'package:boardytale_heroes/src/model/model.dart';
 import 'package:firebase/firebase.dart' as firebase;
 import 'package:firebase/src/firestore.dart';
+import 'package:rxdart/subjects.dart';
 
 /// Mock service emulating access to a to-do list stored on a server.
 @Injectable()
 class AuthService {
   firebase.User user;
   User userData = new User();
+  BehaviorSubject<User> onUserData = new BehaviorSubject();
   DocumentReference loggedUserDocument;
   bool userLoaded = false;
 
@@ -31,6 +33,7 @@ class AuthService {
         } else {
           userData.fromMap(userSnapshot.data());
         }
+        onUserData.add(userData);
         userLoaded = true;
       });
     });

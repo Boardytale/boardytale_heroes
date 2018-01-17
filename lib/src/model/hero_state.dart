@@ -31,6 +31,10 @@ class HeroState {
   List<int> attack = [0, 0, 0, 0, 0, 0];
   num health;
   num efficiency = 1;
+  num intelligenceDistance = null;
+  num strengthDistance = null;
+  num agilityDistance = null;
+  num fullDistance = null;
 
   HeroState(this.hero) {
     ItemSum items = hero.getItemSum();
@@ -103,43 +107,35 @@ class HeroState {
     List<int> workingAttack = [0, 0, 0, 1, 1, 1];
     if (weapon != null) {
       workingAttack = weapon.baseAttack.toList();
-      num intelligenceDistance = null;
-      num strengthDistance = null;
-      num agilityDistance = null;
 
       if (weapon.effectiveIntelligence > intelligence) {
         num iPoint1 = intelligence;
-        num iPoint2 = weapon.effectiveStrength *
-            intelligence /
-            weapon.effectiveIntelligence;
-        num iPoint3 = weapon.effectiveAgility *
-            intelligence /
-            weapon.effectiveIntelligence;
+        num normative = intelligence / weapon.effectiveIntelligence;
+        num iPoint2 = weapon.effectiveStrength * normative;
+        num iPoint3 = weapon.effectiveAgility * normative;
         intelligenceDistance =
             sqrt(pow(iPoint1, 2) + pow(iPoint2, 2) + pow(iPoint3, 2));
       }
 
       if (weapon.effectiveStrength > strength) {
         num iPoint1 = strength;
-        num iPoint2 =
-            weapon.effectiveStrength * strength / weapon.effectiveStrength;
-        num iPoint3 =
-            weapon.effectiveAgility * strength / weapon.effectiveStrength;
+        num normative = strength / weapon.effectiveStrength;
+        num iPoint2 = weapon.effectiveIntelligence * normative;
+        num iPoint3 = weapon.effectiveAgility * normative;
         strengthDistance =
             sqrt(pow(iPoint1, 2) + pow(iPoint2, 2) + pow(iPoint3, 2));
       }
 
       if (weapon.effectiveAgility > agility) {
         num iPoint1 = agility;
-        num iPoint2 =
-            weapon.effectiveStrength * agility / weapon.effectiveAgility;
-        num iPoint3 =
-            weapon.effectiveAgility * agility / weapon.effectiveAgility;
+        num normative = agility / weapon.effectiveAgility;
+        num iPoint2 = weapon.effectiveStrength * normative;
+        num iPoint3 = weapon.effectiveIntelligence * normative;
         agilityDistance =
             sqrt(pow(iPoint1, 2) + pow(iPoint2, 2) + pow(iPoint3, 2));
       }
 
-      num fullDistance = sqrt(pow(weapon.effectiveAgility, 2) +
+      fullDistance = sqrt(pow(weapon.effectiveAgility, 2) +
           pow(weapon.effectiveStrength, 2) +
           pow(weapon.effectiveIntelligence, 2));
 
@@ -192,7 +188,7 @@ class HeroState {
 
     // fill precision with priority
     for (var i = 6 - precision; i < 6; i++) {
-      if(unusedDamage > 1 && workingAttack[i] == 0){
+      if (unusedDamage > 1 && workingAttack[i] == 0) {
         workingAttack[i] = 1;
         unusedDamage--;
       }

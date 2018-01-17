@@ -1,11 +1,41 @@
-<ul class="navbar-nav ml-auto">
-    <li *ngIf="authService.user == null" class="nav-item">
-        <a class="nav-link js-scroll-trigger" href="javascript:" (click)="login()">Sign in / Log in</a>
-    </li>
-    <li *ngIf="authService.user != null" class="nav-item">
-        <span class="nav-link js-scroll-trigger">Logged: {{authService.user.email}}</span>
-    </li>
-</ul>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a *ngIf="authService.user != null" class="navbar-brand" href="#">Logged: {{authService.user.email}}</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li *ngIf="authService.user == null" class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="javascript:" (click)="login()">Sign in / Log in</a>
+                </li>
+                <li *ngIf="heroesService.selected != null" class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="javascript:">Selected: {{heroesService.selected.name}}</a>
+                </li>
+            </ul>
+        </div>
+        <div *ngIf="authService.user != null" class="dropdown">
+            <button
+                    class="btn btn-primary dropdown-toggle"
+                    type="button"
+                    data-toggle="dropdown"
+                    (click)="dropDownOpened = !dropDownOpened"
+            >
+                Heroes<span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" [ngClass]="{'show': dropDownOpened}">
+                <li
+                        *ngFor="let hero of heroes"
+                        [ngClass]="{'selected': heroesService.selected == hero}"
+                        (click)="selectHero(hero)"
+                        class="hero-button">
+                    <a href="#">{{hero.name}}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
 <br>
 <heroes *ngIf="authService.user != null">
 </heroes><br>

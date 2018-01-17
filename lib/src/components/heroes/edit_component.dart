@@ -115,6 +115,10 @@ import 'package:angular_forms/angular_forms.dart';
      Úroveň: {{hero.getState().level}}<br>
      Útok na úroveň: {{hero.getState().levelDamage.toStringAsFixed(2)}}<br>
      Efektivita: {{hero.getState().efficiency.toStringAsFixed(2)}} <br>
+     Využití inteligence: {{hero.getState().intelligenceDistance?.toStringAsFixed(2)}} <br>
+     Využití síly: {{hero.getState().strengthDistance?.toStringAsFixed(2)}} <br>
+     Využití obratnosti: {{hero.getState().agilityDistance?.toStringAsFixed(2)}} <br>
+     Plné využití: {{hero.getState().fullDistance?.toStringAsFixed(2)}} <br>
      Základní útok: {{hero.getWeapon()?.baseAttack}}<br>
     </div>
   </div>
