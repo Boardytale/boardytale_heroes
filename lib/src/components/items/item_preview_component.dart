@@ -5,6 +5,7 @@ import 'package:angular_components/angular_components.dart';
 import 'package:boardytale_heroes/src/model/model.dart';
 import 'package:boardytale_heroes/src/services/heroes_service.dart';
 import 'package:boardytale_heroes/src/services/items_service.dart';
+import 'package:boardytale_heroes/src/services/shops_service.dart';
 
 @Component(
   selector: 'item-preview',
@@ -20,6 +21,7 @@ import 'package:boardytale_heroes/src/services/items_service.dart';
           <button (click)="delete()">Vymaž</button>
           <button (click)="edit()">Uprav</button>
           <button *ngIf="heroesService.selected != null" (click)="addToHero()">Přidej označenému hrdinovi</button>
+          <button *ngIf="shopsService.selected != null" (click)="addToShop()">Přidej do vybraného obchodu</button>
         
         </div>
         <div class="item-preview__bonuses" class="col-4">
@@ -45,9 +47,12 @@ import 'package:boardytale_heroes/src/services/items_service.dart';
 class ItemPreviewComponent implements OnInit {
   ItemsService itemsService;
   HeroesService heroesService;
+  ShopsService shopsService;
   List<Item> items = [];
 
-  ItemPreviewComponent(this.itemsService, this.heroesService);
+  ItemPreviewComponent(this.itemsService,
+      this.heroesService,
+      this.shopsService,);
 
   @Input("item")
   Item item;
@@ -68,5 +73,14 @@ class ItemPreviewComponent implements OnInit {
   void addToHero() {
     heroesService.selected.items.add(item);
     heroesService.createOrEditHero(heroesService.selected);
+  }
+
+  void addToShop() {
+    if (shopsService.selected.items.containsKey(item)) {
+      shopsService.selected.items[item]++;
+    } else {
+      shopsService.selected.items.putIfAbsent(item, () => 1);
+    }
+    shopsService.createShop(shopsService.selected);
   }
 }

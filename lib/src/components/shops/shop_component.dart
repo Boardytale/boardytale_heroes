@@ -16,10 +16,12 @@ import 'package:boardytale_heroes/src/services/shops_service.dart';
   selector: 'edit-shop',
   template: '''
   <h1>Nový obchod</h1>
-  Jméno: <input [(ngModel)]="shopsService.editedShop.name"><br>
-  Popis: <input [(ngModel)]="shopsService.editedShop.description"><br>
+  Jméno: <input [(ngModel)]="shopsService.selected.name"><br>
+  Popis: <input [(ngModel)]="shopsService.selected.description"><br>
   
-  <button (click)="createShop()">Vytvoř nový obchod</button>
+  <div *ngFor="let item of shopsService.selected.items.keys">{{item.name}}</div>
+  
+  <button (click)="createShop()">{{shopsService.selected.id == null? "Vytvoř nový obchod": "Uprav obchod"}}</button>
   ''',
   directives: const [
     CORE_DIRECTIVES,
@@ -35,7 +37,7 @@ class ShopsComponent {
   );
 
   void createShop(){
-    shopsService.createShop(shopsService.editedShop);
-    shopsService.editedShop = null;
+    shopsService.createShop(shopsService.selected);
+    shopsService.selected = null;
   }
 }

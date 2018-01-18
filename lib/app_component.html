@@ -10,9 +10,9 @@
                 <li *ngIf="authService.user == null" class="nav-item">
                     <a class="nav-link js-scroll-trigger" href="javascript:" (click)="login()">Sign in / Log in</a>
                 </li>
-                <li *ngIf="shopsService.editedShop != null" class="nav-item">
+                <li *ngIf="shopsService.selected != null" class="nav-item">
                     <a class="nav-link js-scroll-trigger" href="javascript:">Vybraný obchod:
-                        {{shopsService.editedShop.name}}</a>
+                        {{shopsService.selected.name}}</a>
                 </li>
                 <li *ngIf="heroesService.selected != null" class="nav-item">
                     <a class="nav-link js-scroll-trigger" href="javascript:">Vybraný hrdina:
@@ -51,7 +51,7 @@
                         href="#"
                         class="list-group-item"
                         (click)="selectShop(shop)"
-                        [ngClass]="{'active': shop == shopsService.editedShop}"
+                        [ngClass]="{'active': shop == shopsService.selected}"
                 >{{shop.name}}</a>
                 <a href="#" class="list-group-item" (click)="createShop()">Vytvořit obchod</a>
             </div>
@@ -64,7 +64,7 @@
 
             <items></items>
 
-            <edit-shop *ngIf="shopsService.editedShop != null"></edit-shop>
+            <edit-shop *ngIf="shopsService.selected != null"></edit-shop>
         </div>
     </div>
 </div>

@@ -9,10 +9,10 @@ import 'package:firebase/src/firestore.dart';
 @Injectable()
 class ShopsService {
   Item editingItem;
-  Shop editedShop;
+  Shop selected;
   ItemsService itemsService;
 
-  ShopsService(){
+  ShopsService(this.itemsService){
     print("items service created");
   }
 

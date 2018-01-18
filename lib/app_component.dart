@@ -78,10 +78,10 @@ class AppComponent implements OnInit {
   }
 
   void createShop() {
-    shopsService.editedShop = new Shop();
+    shopsService.selected = new Shop();
   }
 
   void selectShop(shop) {
-    shopsService.editedShop = shop;
+    shopsService.selected = shop;
   }
 }
