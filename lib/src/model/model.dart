@@ -12,3 +12,4 @@ part 'hero_data.dart';
 part 'weapon.dart';
 part 'user.dart';
 part 'item_sum.dart';
+part 'shop.dart';
