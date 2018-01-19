@@ -25,6 +25,7 @@ class Item {
   num spiritualityBonus = 0;
   num precisionBonus = 0;
   num energyBonus = 0;
+  num suggestedPrice = 100;
 
   Item() {}
 
@@ -55,6 +56,9 @@ class Item {
     name = data["name"];
     type = data["type"];
     id = data["id"].toString();
+    if(data["suggestedPrice"] is int){
+      suggestedPrice = data["suggestedPrice"];
+    }
   }
 
   Map toMap() {
@@ -71,7 +75,8 @@ class Item {
       'energyBonus': energyBonus,
       'name': name,
       'type': type,
-      'id': id
+      'id': id,
+      'suggestedPrice': suggestedPrice.toInt()
     };
   }
 }

@@ -4,16 +4,17 @@ class Shop {
   String id;
   String name;
   String description;
-  Map<Item, int> items = {};
+  List<ShopItem> items = [];
 
   void fromMap(Map data, ItemsService itemsService) {
     id = data["id"];
     name = data["name"];
     description = data["description"];
-    Map<String, int> itemsData = data["items"];
-    itemsData.forEach((itemId, quantity) {
-      itemsService.getItemById(itemId).then((Item itemData) {
-        items.putIfAbsent(itemData, () => quantity);
+    List<Map> itemsData = data["items"];
+    itemsData.forEach((itemData) {
+      ShopItem newItem = new ShopItem()..fromMap(itemData);
+      itemsService.getItemById(newItem.itemId).then((Item originalItem) {
+        items.add(newItem..item = originalItem);
       });
     });
   }
@@ -23,12 +24,28 @@ class Shop {
     out["id"] = id;
     out["description"] = description;
     out["name"] = name;
-    Map outItems = {};
-
-    items.forEach((Item item, int quantity) {
-      outItems.putIfAbsent(item.id, () => quantity);
-    });
-    out["items"] = outItems;
+    out["items"] = items.map((ShopItem item)=>item.toMap());
     return out;
+  }
+}
+
+class ShopItem {
+  Item item;
+  String itemId;
+  int quantity = 1;
+  num price = 10;
+
+  Map toMap() {
+    Map out = {};
+    out["item"] = item.id;
+    out["quantity"] = quantity;
+    out["price"] = price.toInt();
+    return out;
+  }
+
+  void fromMap(Map data) {
+    quantity = data["quantity"];
+    price = data["price"];
+    itemId = data["item"];
   }
 }

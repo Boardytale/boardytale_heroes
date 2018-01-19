@@ -37,6 +37,7 @@ import 'package:angular_forms/angular_forms.dart';
   Bonus spirituality: <input type="number" [(ngModel)]="newItem.spiritualityBonus" step="1"><br>
   Bonus přestnosti: <input type="number" [(ngModel)]="newItem.precisionBonus" step="1"><br>
   Bonus energie: <input type="number" [(ngModel)]="newItem.energyBonus" step="1"><br>
+  Doporučená cena: <input type="number" [(ngModel)]="newItem.suggestedPrice" step="1"><br>
     
     <span>
       Body přesnosti: <input type="number" [(ngModel)]="newItem.precision" step="1"><br>

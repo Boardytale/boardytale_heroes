@@ -15,6 +15,7 @@ import 'package:boardytale_heroes/src/services/shops_service.dart';
         <div class="item-preview__requirements" class="col-8">
           <strong>{{item.name}} - {{item.getType()}}</strong><br>
           <span>Hmotnost: {{item.weight}}</span><br>
+          <span>Doporučená cena: {{item.suggestedPrice}}</span><br>
           <span *ngIf="item.type == 'weapon'">Body přesnosti: {{item.precision}}<br></span>
           <span *ngIf="item.type == 'weapon'">Efektivní s/o/i: {{item.effectiveStrength}} / {{item.effectiveAgility}} / {{item.effectiveIntelligence}}<br></span>
           <span *ngIf="item.type == 'weapon'">Základní útok: {{item.baseAttack}}<br></span>
@@ -50,9 +51,11 @@ class ItemPreviewComponent implements OnInit {
   ShopsService shopsService;
   List<Item> items = [];
 
-  ItemPreviewComponent(this.itemsService,
-      this.heroesService,
-      this.shopsService,);
+  ItemPreviewComponent(
+    this.itemsService,
+    this.heroesService,
+    this.shopsService,
+  );
 
   @Input("item")
   Item item;
@@ -76,11 +79,17 @@ class ItemPreviewComponent implements OnInit {
   }
 
   void addToShop() {
-    if (shopsService.selected.items.containsKey(item)) {
-      shopsService.selected.items[item]++;
-    } else {
-      shopsService.selected.items.putIfAbsent(item, () => 1);
-    }
+    ShopItem shopItem = shopsService.selected.items
+        .firstWhere((ShopItem item) => item.item == this.item, orElse: () {
+      ShopItem newItem = new ShopItem()
+        ..quantity = 0
+        ..item = item
+        ..price = item.suggestedPrice
+      ;
+      shopsService.selected.items.add(newItem);
+      return newItem;
+    });
+    shopItem.quantity++;
     shopsService.createShop(shopsService.selected);
   }
 }

@@ -25,6 +25,7 @@ import 'package:angular_forms/angular_forms.dart';
          Spiritualita: <buttoned-input [(value)]="hero.spirituality" [decimal]="true"></buttoned-input> <br>
          Energie:  <buttoned-input [(value)]="hero.energy" [decimal]="true"></buttoned-input><br>
          Zkušenosti:  <buttoned-input [(value)]="hero.experience" [decimal]="true"></buttoned-input><br>
+         Hotovost:   <input type="number" [(ngModel)]="hero.money" step="1"><br>
       <button (click)="save()">Uložit změny</button>
     
     </div>
@@ -75,7 +76,7 @@ import 'package:angular_forms/angular_forms.dart';
     </div>
     <div class="col-4">
     <h3>Seznam vybavení</h3>
-       <div *ngFor="let item of hero.items">{{item.name}} - {{item.getType()}}<button (click)="removeItem(item)">Odebrat</button></div>
+       <div *ngFor="let item of hero.items">{{item.name}} - {{item.getType()}}<button (click)="sellItem(item)">Prodat ({{(item.suggestedPrice / 2).floor()}})</button></div>
     </div>
   </div>
   <div class="row">
@@ -151,8 +152,9 @@ class EditHeroComponent {
     save();
   }
 
-  void removeItem(Item item) {
+  void sellItem(Item item) {
     hero.items.removeWhere((Item value) => value == item);
+    hero.money += (item.suggestedPrice / 2).floor();
     save();
   }
 }

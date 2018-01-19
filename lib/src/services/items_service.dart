@@ -9,17 +9,19 @@ import 'package:firebase/src/firestore.dart';
 class ItemsService {
   Item editingItem;
 
-  ItemsService(){
+  ItemsService() {
     print("items service created");
   }
 
   Future<DocumentReference> createItem(Item item) async {
-    if(item.id != "noid") {
-      return firestore().collection('items').doc(item.id).update(data: item.toMap());
-    }else{
+    if (item.id != "noid") {
+      return firestore()
+          .collection('items')
+          .doc(item.id)
+          .update(data: item.toMap());
+    } else {
       return firestore().collection('items').add(item.toMap());
     }
-
   }
 
   Future<Stream<List<Item>>> getItems() async {
@@ -48,9 +50,14 @@ class ItemsService {
         .get()
         .asStream()
         .map((DocumentSnapshot document) {
-      Map data = document.data();
-      data["id"] = document.id;
-      return _getItemByData(data);
+      if (document.exists) {
+        Map data = document.data();
+        data["id"] = document.id;
+        return _getItemByData(data);
+      } else {
+        print("item not found $itemId");
+        return null;
+      }
     }).first;
   }
 

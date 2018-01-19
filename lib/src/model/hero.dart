@@ -12,6 +12,7 @@ class Hero {
   num spirituality = 10;
   num energy = 10;
   num experience = 0;
+  num money = 100;
 
 //  HeroData data = new HeroData();
   List<Item> items = new List<Item>();
@@ -76,6 +77,7 @@ class Hero {
     out["energy"] = energy;
     out["precision"] = precision;
     out["items"] = items.map((Item i) => i.id).toList();
+    out["money"] = money.toInt();
     return out;
   }
 
@@ -89,6 +91,9 @@ class Hero {
     spirituality = data["spirituality"];
     energy = data["energy"];
     precision = data["precision"];
+    if(data["money"] is int){
+      money = data["money"];
+    }
 
     List<String> itemsInput = data["items"];
     if (itemsInput == null) {

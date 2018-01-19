@@ -23,6 +23,7 @@ import 'package:boardytale_heroes/src/services/items_service.dart';
   Bonus spirituality: <input type="number" [(ngModel)]="newItem.spiritualityBonus" step="1"><br>
   Bonus přestnosti: <input type="number" [(ngModel)]="newItem.precisionBonus" step="1"><br>
   Bonus energie: <input type="number" [(ngModel)]="newItem.energyBonus" step="1"><br>
+  Doporučená cena: <input type="number" [(ngModel)]="newItem.suggestedPrice" step="1"><br>
   
   Typ předmětu:
     <select #itemType [(ngModel)]="newItem.type">

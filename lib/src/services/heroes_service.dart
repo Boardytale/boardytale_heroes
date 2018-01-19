@@ -43,4 +43,8 @@ class HeroesService {
   void delete(Item item) {
     firestore().collection('items').doc(item.id).delete();
   }
+
+  void saveSelected() {
+    createOrEditHero(selected);
+  }
 }

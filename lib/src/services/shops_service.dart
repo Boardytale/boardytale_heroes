@@ -55,4 +55,8 @@ class ShopsService {
       return new Shop()..fromMap(data, itemsService);
     }).first;
   }
+
+  void saveSelected() {
+    createShop(selected);
+  }
 }
