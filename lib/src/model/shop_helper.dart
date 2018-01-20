@@ -1,7 +1,7 @@
 part of boardytale.heroes.model;
 
 class ShopHelper {
-  static const double weightHalfPoint = 50.0;
+  static const double weightHalfPoint = 25.0;
   static const double attributePrice = 20.0;
   static const double effectiveAttributePrice = 10.0;
   static const double armorPointPrice = 25.0;
@@ -17,11 +17,14 @@ class ShopHelper {
   static const double effectiveStrengthPrice = effectiveAttributePrice;
   static const double effectiveAgilityPrice = effectiveAttributePrice;
   static const double effectiveIntelligencePrice = effectiveAttributePrice;
-  static const double index1AttackPrice = 15.0;
-  static const double index2AttackPrice = 10.0;
-  static const double index3AttackPrice = 7.5;
-  static const double index4AttackPrice = 5.0;
-  static const double index5AttackPrice = 3.0;
+  static const double attackPrice = 15.0;
+  static const double index1AttackPrice = 8.0* attackPrice;
+  static const double index2AttackPrice = 4.0* attackPrice;
+  static const double index3AttackPrice = 2.0* attackPrice;
+  static const double index4AttackPrice = 1.0* attackPrice;
+  static const double index5AttackPrice = 1.0 * attackPrice;
+
+  static const double priceProgression = 2.0;
 
   static const Map<String, double> typeCoefficients = const {
     "weapon": 1.0,
@@ -49,10 +52,10 @@ class ShopHelper {
       weaponPrice += _recommendWeaponPrice(item);
     }
     double weightCoefficient = _weightCoefficient(item);
-    double price = (bonusPrice+weaponPrice)*weightCoefficient;
-//    print("${item.name} - ($bonusPrice + $weaponPrice) * $weightCoefficient => $price");
-    price = pow(price / 100, 1.3) * 100.0;
-    return _roundPrice(price);
+    double price = (bonusPrice + weaponPrice) * weightCoefficient;
+    int roundedProgressedPrice =_roundPrice( pow(price / 100, priceProgression) * 100.0);
+    print("${item.name} - ($bonusPrice + $weaponPrice) * $weightCoefficient => $price => $roundedProgressedPrice");
+    return roundedProgressedPrice;
   }
 
   static double _recommendWeaponPrice(Weapon weapon) {
@@ -65,7 +68,7 @@ class ShopHelper {
         weapon.baseAttack[3] * index3AttackPrice +
         weapon.baseAttack[4] * index4AttackPrice +
         weapon.baseAttack[5] * index5AttackPrice;
-    //print("${weapon.name} (${weapon.baseAttack}) - $price * $effectiveCoefficient => ${price*effectiveCoefficient}");
+    print("${weapon.name} (${weapon.baseAttack}) - $price * $effectiveCoefficient => ${price*effectiveCoefficient}");
     return price * effectiveCoefficient;
   }
 
@@ -76,13 +79,10 @@ class ShopHelper {
   }
 
   static int _roundPrice(double price) {
-    int places = (log(price)/LN10).floor();
+    int places = (log(price) / LN10).floor();
     int divider = 1;
-    if (places > 0) {
-      divider = pow(10, places-1).floor();
-      return (price / divider).round() * divider;
-    } else {
-      return 1;
-    }
+    if (places <= 0) return 1;
+    divider = pow(10, places - 1).floor();
+    return (price / divider).round() * divider;
   }
 }
