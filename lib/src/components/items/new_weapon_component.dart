@@ -94,6 +94,7 @@ class NewWeaponComponent implements OnInit {
 
   void createItem() {
     _onNewItem.add(null);
+    newItem.type=Weapon.typeName;
     itemsService.createItem(newItem);
     itemsService.editingItem = null;
   }
