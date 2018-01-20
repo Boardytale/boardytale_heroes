@@ -39,7 +39,7 @@ class AppComponent implements OnInit {
   List<Hero> heroes = [];
   bool dropDownOpened = false;
   List<Shop> shops = [];
-  bool itemsVisible = false;
+  bool itemsVisible = true;
 
   AppComponent(
     this.authService,

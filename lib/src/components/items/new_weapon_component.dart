@@ -67,7 +67,7 @@ import 'package:angular_forms/angular_forms.dart';
   ],
 )
 class NewWeaponComponent implements OnInit {
-  Item newItem = new Weapon();
+  Weapon newItem = new Weapon();
   final ItemsService itemsService;
 
   final _onNewItem = new StreamController<Null>();
@@ -93,8 +93,8 @@ class NewWeaponComponent implements OnInit {
   }
 
   void createItem() {
-    _onNewItem.add(null);
     newItem.type=Weapon.typeName;
+    _onNewItem.add(null);
     itemsService.createItem(newItem);
     itemsService.editingItem = null;
   }

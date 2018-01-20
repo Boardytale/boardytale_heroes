@@ -16,9 +16,9 @@ import 'package:boardytale_heroes/src/services/shops_service.dart';
           <strong>{{item.name}} - {{item.getType()}}</strong><br>
           <span>Hmotnost: {{item.weight}}</span><br>
           <span>Doporučená cena: {{item.suggestedPrice}}</span><br>
-          <span *ngIf="item.type == 'weapon'">Body přesnosti: {{item.precision}}<br></span>
-          <span *ngIf="item.type == 'weapon'">Efektivní s/o/i: {{item.effectiveStrength}} / {{item.effectiveAgility}} / {{item.effectiveIntelligence}}<br></span>
-          <span *ngIf="item.type == 'weapon'">Základní útok: {{item.baseAttack}}<br></span>
+          <span *ngIf="item.type == 'weapon'">Body přesnosti: {{weapon.precision}}<br></span>
+          <span *ngIf="item.type == 'weapon'">Efektivní s/o/i: {{weapon.effectiveStrength}} / {{weapon.effectiveAgility}} / {{weapon.effectiveIntelligence}}<br></span>
+          <span *ngIf="item.type == 'weapon'">Základní útok: {{weapon.baseAttack}}<br></span>
           <button (click)="delete()">Vymaž</button>
           <button (click)="edit()">Uprav</button>
           <button *ngIf="heroesService.selected != null" (click)="addToHero()">Přidej označenému hrdinovi</button>
@@ -59,6 +59,8 @@ class ItemPreviewComponent implements OnInit {
 
   @Input("item")
   Item item;
+
+  Weapon get weapon => item as Weapon;
 
   @override
   Future<Null> ngOnInit() async {

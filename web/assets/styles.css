@@ -57,3 +57,31 @@ attack-input button {
   padding: 0px;
   margin: 0px;
 }
+
+th{
+    text-align: center;
+    margin:2px;
+}
+
+td{
+    text-align: center;
+    margin:2px;
+    border:1px solid black;
+}
+
+table{
+    border-collapse: collapse;
+}
+
+.bodyItem{
+    background-color: #007bff;
+}
+
+.boots{
+    background-color: green;
+}
+
+.jewels{
+    color: black;
+    background-color: gold;
+}
