@@ -43,7 +43,7 @@ class Calculations{
     num coef = (atan(shift+(agility/8))-atanShift)/((PI/2)-atanShift);
     dmg.add((sumDmg*pow(coef,2.5)*3).floor());
     dmg.add((sumDmg*pow(coef,1.5)*3).floor());
-    dmg.add((sumDmg*coef).floor()*3);
+    dmg.add((sumDmg*coef*3).floor());
     dmg.add((((strength/10)+(sumDmg))*3).floor());
     dmg.add((((strength/5)+(sumDmg))*3).floor());
 
