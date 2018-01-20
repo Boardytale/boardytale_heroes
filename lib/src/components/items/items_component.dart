@@ -25,6 +25,7 @@ import 'package:boardytale_heroes/src/services/items_service.dart';
         <th>Typ</th>
         <th>Hmotnost</th>
         <th>Dop.cena</th>
+        <th>Vyp.cena</th>
         <th>+Síla</th>
         <th>+Obr</th>
         <th>+Spirit</th>
@@ -42,7 +43,8 @@ import 'package:boardytale_heroes/src/services/items_service.dart';
        <td>{{item.name}}</td>
        <td>{{item.getType()}}</td>
         <td>{{item.weight}}</td>
-        <td>{{item.suggestedPrice}}</td>
+        <td class="{{priceIsWrongClass(item)}}">{{item.suggestedPrice}}</td>
+        <td>{{item.recommendedPrice}}</td>
         <td>{{item.strengthBonus}}</td>
         <td>{{item.agilityBonus}}</td>
         <td>{{item.spiritualityBonus}}</td>
@@ -64,6 +66,7 @@ import 'package:boardytale_heroes/src/services/items_service.dart';
         
         <th>Hmotnost</th>
         <th>Dop.cena</th>
+        <th>Vyp.cena</th>
         <th>+Síla</th>
         <th>+Obr</th>
         <th>+Spirit</th>
@@ -81,7 +84,8 @@ import 'package:boardytale_heroes/src/services/items_service.dart';
         <td>{{item.baseAttack}}</td>
        
         <td>{{item.weight}}</td>
-        <td>{{item.suggestedPrice}}</td>
+        <td class="{{priceIsWrongClass(item)}}">{{item.suggestedPrice}}</td>
+        <td>{{item.recommendedPrice}}</td>
         <td>{{item.strengthBonus}}</td>
         <td>{{item.agilityBonus}}</td>
         <td>{{item.spiritualityBonus}}</td>
@@ -123,6 +127,12 @@ class ItemsComponent implements OnInit {
   void onNewItem() {
     createItemActive = false;
     createWeaponActive = false;
+  }
+
+  String priceIsWrongClass(Item item){
+    int diff = item.suggestedPrice - item.recommendedPrice;
+    if(diff<0) diff*=-1;
+    return diff/(item.recommendedPrice+0.001) > 0.5 ? "price_is_wrong":"";
   }
 
   @override

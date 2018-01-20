@@ -74,14 +74,18 @@ table{
 }
 
 .bodyItem{
-    background-color: #007bff;
+    background-color: lightblue;
 }
 
 .boots{
-    background-color: green;
+    background-color: lightgreen;
 }
 
 .jewels{
     color: black;
     background-color: gold;
+}
+.price_is_wrong{
+    color: red;
+    font-weight: bold;
 }
