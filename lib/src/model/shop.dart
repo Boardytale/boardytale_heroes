@@ -14,7 +14,9 @@ class Shop {
     itemsData.forEach((itemData) {
       ShopItem newItem = new ShopItem()..fromMap(itemData);
       itemsService.getItemById(newItem.itemId).then((Item originalItem) {
-        items.add(newItem..item = originalItem);
+        if(originalItem != null) {
+          items.add(newItem..item = originalItem);
+        }
       });
     });
   }

@@ -85,12 +85,30 @@ class Hero {
     userId = data["userId"];
     name = data["name"];
     agility = data["agility"];
+    if(agility<1){
+      agility = 1;
+    }
     strength = data["strength"];
+    if(strength<1){
+      strength = 1;
+    }
     intelligence = data["intelligence"];
+    if(intelligence<1){
+      intelligence = 1;
+    }
 
     spirituality = data["spirituality"];
+    if(spirituality<1){
+      spirituality = 1;
+    }
     energy = data["energy"];
+    if(energy<1){
+      energy = 1;
+    }
     precision = data["precision"];
+    if(precision<1){
+      precision = 1;
+    }
     if(data["money"] is int){
       money = data["money"];
     }
@@ -103,7 +121,9 @@ class Hero {
     items.clear();
     itemsInput.forEach((String itemId) {
       itemsService.getItemById(itemId).then((Item item) {
-        items.add(item);
+        if(item != null){
+          items.add(item);
+        }
       });
     });
 

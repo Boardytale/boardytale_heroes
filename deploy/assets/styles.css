@@ -1,0 +1,59 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+@import url(https://fonts.googleapis.com/css?family=Material+Icons);
+
+body {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1vw;
+    font-size: 0.7em;
+}
+
+* {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+}
+
+.item-preview {
+    border: 1px solid black;
+    margin: 1px;
+    padding: 4px;
+}
+
+.item-preview__requirements {
+    width: 49%;
+    display: inline-block;
+}
+
+.item-preview__bonuses {
+    width: 49%;
+    display: inline-block;
+}
+
+.item-preview__weapon {
+    width: 99%;
+    display: inline-block;
+}
+
+.selected {
+    text-decoration: underline;
+    color: red;
+}
+
+.hero-button {
+    padding: 4px;
+    margin: 4px;
+    cursor: pointer;
+    border: 1px solid black;
+    box-shadow: #0b2e13;
+}
+
+attack-input button {
+    width: 20px;
+    height: 20px;
+    margin: 1px;
+    padding: 1px;
+}
+
+.item-tile {
+  padding: 0px;
+  margin: 0px;
+}
