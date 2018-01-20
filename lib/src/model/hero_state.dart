@@ -201,10 +201,10 @@ class HeroState {
     attack = workingAttack;
   }
 
-  double _applyWeaponEfficiency(List<int> baseAttack, double efficiency) {
+  double _applyWeaponEfficiency(List<int> baseAttack, num efficiency) {
     double out = 0.0;
     for (int i = 0; i < baseAttack.length; i++) {
-      double reduced = baseAttack[i] * efficiency;
+      double reduced = baseAttack[i] * efficiency.toDouble();
       out += reduced.remainder(1);
       baseAttack[i] = reduced.floor();
     }

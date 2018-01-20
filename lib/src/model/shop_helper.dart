@@ -54,7 +54,7 @@ class ShopHelper {
     double weightCoefficient = _weightCoefficient(item);
     double price = (bonusPrice + weaponPrice) * weightCoefficient;
     int roundedProgressedPrice =_roundPrice( pow(price / 100, priceProgression) * 100.0);
-    print("${item.name} - ($bonusPrice + $weaponPrice) * $weightCoefficient => $price => $roundedProgressedPrice");
+//    print("${item.name} - ($bonusPrice + $weaponPrice) * $weightCoefficient => $price => $roundedProgressedPrice");
     return roundedProgressedPrice;
   }
 
@@ -68,7 +68,7 @@ class ShopHelper {
         weapon.baseAttack[3] * index3AttackPrice +
         weapon.baseAttack[4] * index4AttackPrice +
         weapon.baseAttack[5] * index5AttackPrice;
-    print("${weapon.name} (${weapon.baseAttack}) - $price * $effectiveCoefficient => ${price*effectiveCoefficient}");
+//    print("${weapon.name} (${weapon.baseAttack}) - $price * $effectiveCoefficient => ${price*effectiveCoefficient}");
     return price * effectiveCoefficient;
   }
 
