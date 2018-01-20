@@ -1,0 +1,27 @@
+<h1>Vytvořit předmět</h1>
+<button (click)="cancel()">Zrušit</button><br>
+Název: <input label="Název" autoFocus style="width:80%" [(ngModel)]="newItem.name"><br>
+Hmotnost: <input type="number" [(ngModel)]="weight" step="1"><br>
+Body zbroje: <input type="number" [(ngModel)]="newItem.armorPoints" step="1"><br>
+Bonus životů: <input type="number" [(ngModel)]="newItem.healthBonus" step="1"><br>
+Bonus many: <input type="number" [(ngModel)]="newItem.manaBonus" step="1"><br>
+Bonus síly: <input type="number" [(ngModel)]="newItem.strengthBonus" step="1"><br>
+Bonus obratnosti: <input type="number" [(ngModel)]="newItem.agilityBonus" step="1"><br>
+<!--Bonus inteligence: <input type="number" [(ngModel)]="newItem.intelligenceBonus" step="1"><br>-->
+Bonus spirituality: <input type="number" [(ngModel)]="newItem.spiritualityBonus" step="1"><br>
+Bonus přestnosti: <input type="number" [(ngModel)]="newItem.precisionBonus" step="1"><br>
+Bonus energie: <input type="number" [(ngModel)]="newItem.energyBonus" step="1"><br>
+Doporučená cena: <input type="number" [(ngModel)]="newItem.suggestedPrice" step="1"><br>
+
+Typ předmětu:
+<select #itemType [(ngModel)]="newItem.type">
+    <option value="body">Zbroj na tělo</option>
+    <option value="helm">Přilba</option>
+    <option value="gauntlet">Rukavice</option>
+    <option value="boots">Boty</option>
+    <option value="ring">Prsten</option>
+    <option value="amulet">Amulet</option>
+    <option value="shield">Štít</option>
+</select>
+
+<button (click)="createItem()">{{newItem.id == "noid"?"Vytvořit": "Upravit"}}</button>

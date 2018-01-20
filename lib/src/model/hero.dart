@@ -7,7 +7,7 @@ class Hero {
 
   num strength = 1;
   int agility = 1;
-  num intelligence = 1;
+//  num intelligence = 1;
   num precision = 10;
   num spirituality = 10;
   num energy = 10;
@@ -72,7 +72,7 @@ class Hero {
     out["name"] = name;
     out["agility"] = agility;
     out["strength"] = strength;
-    out["intelligence"] = intelligence;
+//    out["intelligence"] = intelligence;
     out["spirituality"] = spirituality;
     out["energy"] = energy;
     out["precision"] = precision;
@@ -86,7 +86,7 @@ class Hero {
     name = data["name"];
     agility = data["agility"];
     strength = data["strength"];
-    intelligence = data["intelligence"];
+//    intelligence = data["intelligence"];
 
     spirituality = data["spirituality"];
     energy = data["energy"];
@@ -114,9 +114,9 @@ class Hero {
     if (strength == null) {
       strength = 1;
     }
-    if (intelligence == null) {
-      intelligence = 1;
-    }
+//    if (intelligence == null) {
+//      intelligence = 1;
+//    }
     if (spirituality == null) {
       spirituality = 1;
     }

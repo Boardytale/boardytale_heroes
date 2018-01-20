@@ -13,3 +13,4 @@ part 'weapon.dart';
 part 'user.dart';
 part 'item_sum.dart';
 part 'shop.dart';
+part 'calculations.dart';

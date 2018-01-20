@@ -21,43 +21,7 @@ import 'package:angular_forms/angular_forms.dart';
 
 @Component(
   selector: 'new-weapon',
-  template: '''
-  
-     <h1>Vytvořit předmět</h1>
-     <button (click)="cancel()">Zrušit</button><br>
-     
-  Název: <input label="Název" autoFocus style="width:80%" [(ngModel)]="newItem.name"><br>
-  Hmotnost: <input type="number" [(ngModel)]="weight" step="1"><br>
-  Body zbroje: <input type="number" [(ngModel)]="newItem.armorPoints" step="1"><br>
-  Bonus životů: <input type="number" [(ngModel)]="newItem.healthBonus" step="1"><br>
-  Bonus many: <input type="number" [(ngModel)]="newItem.manaBonus" step="1"><br>
-  Bonus síly: <input type="number" [(ngModel)]="newItem.strengthBonus" step="1"><br>
-  Bonus obratnosti: <input type="number" [(ngModel)]="newItem.agilityBonus" step="1"><br>
-  Bonus inteligence: <input type="number" [(ngModel)]="newItem.intelligenceBonus" step="1"><br>
-  Bonus spirituality: <input type="number" [(ngModel)]="newItem.spiritualityBonus" step="1"><br>
-  Bonus přestnosti: <input type="number" [(ngModel)]="newItem.precisionBonus" step="1"><br>
-  Bonus energie: <input type="number" [(ngModel)]="newItem.energyBonus" step="1"><br>
-  Doporučená cena: <input type="number" [(ngModel)]="newItem.suggestedPrice" step="1"><br>
-    
-    <span>
-      Body přesnosti: <input type="number" [(ngModel)]="newItem.precision" step="1"><br>
-    </span>
-    
-    <span>
-      Efektivní inteligence: <input type="number" [(ngModel)]="newItem.effectiveIntelligence" step="1"><br>
-    </span>
-    <span>
-      Efektivní síla: <input type="number" [(ngModel)]="newItem.effectiveStrength" step="1"><br>
-    </span>
-    <span>
-      Efektivní obratnost: <input type="number" [(ngModel)]="newItem.effectiveAgility" step="1"><br>
-    </span>
-    <span>
-      Základní útok: <br><attack-input [(value)]="newItem.baseAttack"></attack-input><br>
-    </span>
-  
-  <button (click)="createItem()">{{newItem.id == "noid"?"Vytvořit": "Upravit"}}</button>
-  ''',
+  templateUrl: 'new_weapon_component.html',
   directives: const [
     CORE_DIRECTIVES,
     materialDirectives,

@@ -1,0 +1,83 @@
+<h1>Úprava hrdiny</h1>
+<div class="row">
+    <div class="col-4">
+        <h3>Vlastnosti postavy</h3>
+        Jméno:      <input [(ngModel)]="hero.name"><br>
+        Síla:       <buttoned-input [(value)]="hero.strength"></buttoned-input><br>
+        Obratnost:  <buttoned-input [(value)]="hero.agility"></buttoned-input><br>
+        Přesnost:   <buttoned-input [(value)]="hero.precision" [decimal]="true"></buttoned-input><br>
+        Spiritualita: <buttoned-input [(value)]="hero.spirituality" [decimal]="true"></buttoned-input> <br>
+        Energie:    <buttoned-input [(value)]="hero.energy" [decimal]="true"></buttoned-input><br>
+        Zkušenosti:  <buttoned-input [(value)]="hero.experience" [decimal]="true"></buttoned-input><br>
+        Hotovost:   <input type="number" [(ngModel)]="hero.money" step="1"><br>
+        <button (click)="save()">Uložit změny</button>
+
+    </div>
+    <div class="col-4">
+        <h3>Předměty</h3>
+        Hmotnost: {{hero.getItemSum().weight}} <br>
+        Body zbroje: {{hero.getItemSum().armorPoints}} <br>
+        Bonus k životu: {{hero.getItemSum().healthBonus}} <br>
+        Bonus k maně: {{hero.getItemSum().manaBonus}} <br>
+        Bonus k síle: {{hero.getItemSum().strengthBonus}} <br>
+        Bonus k obratnosti: {{hero.getItemSum().agilityBonus}} <br>
+        Bonus ke spiritualitě: {{hero.getItemSum().spiritualityBonus}}<br>
+        Bonus k preciznosti: {{hero.getItemSum().precisionBonus}} <br>
+        Bonus k energii: {{hero.getItemSum().energyBonus}} <br>
+
+    </div>
+    <div class="col-4">
+        <h3>Zbraň</h3>
+        Název: {{hero.getWeapon()?.name}}<br>
+        Základní útok: {{hero.getWeapon()?.baseAttack}}<br>
+        Bonus k útoku: {{hero.getWeapon()?.bonusAttack}}<br>
+        Základní útok hrdiny: {{hero.getState().ownAttack}}<br />
+        Útok: {{hero.getState().attack}}<br />
+        <button (click)="removeWeapon()">Odebrat</button>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-4">
+        <h3>Mezivýpočty</h3>
+        Hmotnost výbavy: {{hero.getState().itemWeight}}<br>
+        Mana: {{hero.getState().mana}}<br>
+        Obratnost (+items):   {{hero.getState().effectiveAgility}} = {{hero.agility}} (+{{hero.getItemSum().agilityBonus}})<br>
+        Síla(+items):         {{hero.getState().effectiveStrength}} = {{hero.strength}} (+{{hero.getItemSum().strengthBonus}})<br>
+        Základ počtu životů (6 + 2*síla)(+items): {{hero.getState().baseHealth}}(+{{hero.getItemSum().healthBonus}})<br>
+    </div>
+    <div class="col-4">
+        <h3>Postava</h3>
+        Úroveň: {{hero.getState().level}}<br>
+        Životy: {{hero.getState().health}}<br>
+        Zbroj: {{hero.getState().armor}}<br>
+        Rychlost: {{hero.getState().speed}}<br>
+        Útok {{hero.getState().attack}}<br>
+    </div>
+    <div class="col-4">
+        <h3>Seznam vybavení</h3>
+        <div *ngFor="let item of hero.items">{{item.name}} - {{item.getType()}}<button (click)="sellItem(item)">Prodat ({{(item.suggestedPrice / 2).floor()}})</button></div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-3">
+        <h3>Rychlost</h3>
+        Hmotnost: {{hero.getState().itemWeight}}<br>
+        Síla (nosnost): {{hero.getState().effectiveStrength}} ({{hero.getState().weightLimit}})<br>
+        Rychlost: {{hero.getState().speed}}<br>
+        Potřeba pro +1: TODO
+    </div>
+    <div class="col-3">
+        <h3>Zbroj</h3>
+        Hmotnost: {{hero.getState().itemWeight}}<br>
+        Obratnost: {{hero.getState().effectiveAgility}} (TODO chybí do dalšího brnění)<br>
+        Body zbroje: {{hero.getItemSum().armorPoints.toStringAsFixed(2)}}<br>
+        Zbroj: {{hero.getState().armor}}<br>
+    </div>
+    <div class="col-3">
+        TODO:
+    </div>
+</div>
+<br>
+<hr>
+<br>
