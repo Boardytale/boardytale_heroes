@@ -70,8 +70,6 @@ import 'package:boardytale_heroes/src/services/shops_service.dart';
       <tr>
         <th>Název</th>
         
-        <th>Přesnost</th>
-        <th>Efektivní s/o/i</th>
         <th>Útok</th>
         
         <th>Hmotnost</th>
@@ -93,8 +91,6 @@ import 'package:boardytale_heroes/src/services/shops_service.dart';
       <tr *ngFor="let item of weapons">
         <td>{{item.name}}</td>
        
-        <td>{{item.precision}}</td>
-        <td>{{item.effectiveStrength}} / {{item.effectiveAgility}} / {{item.effectiveIntelligence}}</td>
         <td>{{item.baseAttack}}</td>
        
         <td>{{item.weight}}</td>
