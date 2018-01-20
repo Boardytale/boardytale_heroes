@@ -17,8 +17,6 @@ import 'package:boardytale_heroes/src/services/shops_service.dart';
           <span>Hmotnost: {{item.weight}}</span><br>
           <span>Doporučená cena: {{item.suggestedPrice}}</span><br>
           <span>Vypočtená cena: {{item.recommendedPrice}}</span><br>
-          <span *ngIf="item.type == 'weapon'">Body přesnosti: {{weapon.precision}}<br></span>
-          <span *ngIf="item.type == 'weapon'">Efektivní s/o/i: {{weapon.effectiveStrength}} / {{weapon.effectiveAgility}} / {{weapon.effectiveIntelligence}}<br></span>
           <span *ngIf="item.type == 'weapon'">Základní útok: {{weapon.baseAttack}}<br></span>
           <button (click)="delete()">Vymaž</button>
           <button (click)="edit()">Uprav</button>

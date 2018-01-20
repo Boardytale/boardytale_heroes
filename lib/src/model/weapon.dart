@@ -2,35 +2,19 @@ part of boardytale.heroes.model;
 
 class Weapon extends Item {
   static const String typeName = "weapon";
-  num precision = 1;
-  num effectiveStrength = 1;
-  num effectiveIntelligence = 1;
-  num effectiveAgility = 1;
   List<int> baseAttack = [0, 0, 0, 0, 0, 0];
+  List<int> bonusAttack = [0, 0, 0, 0, 0, 0];
 
   void fromMap(Map data) {
     super.fromMap(data);
-    precision = data["precision"];
-    if (data["effectiveStrength"] is num) {
-      effectiveStrength = data["effectiveStrength"];
-    }
-    if (data["effectiveIntelligence"] is num) {
-      effectiveIntelligence = data["effectiveIntelligence"];
-    }
-    if (data["effectiveAgility"] is num) {
-      effectiveAgility = data["effectiveAgility"];
-    }
     baseAttack = data["baseAttack"];
   }
 
   Map toMap() {
     Map out = super.toMap();
     out.addAll({
-      'precision': precision,
-      'effectiveStrength': effectiveStrength,
-      'effectiveIntelligence': effectiveIntelligence,
-      'effectiveAgility': effectiveAgility,
-      'baseAttack': baseAttack
+      'baseAttack': baseAttack,
+      'bonusAttack': bonusAttack
     });
     return out;
   }
@@ -62,4 +46,5 @@ class Weapon extends Item {
     x = (y - n2) ~/ sqrt(1 / 3);
     return new Point(x, y);
   }
+
 }
