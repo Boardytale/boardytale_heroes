@@ -79,6 +79,9 @@ class ShopHelper {
   }
 
   static int _roundPrice(double price) {
+    if(price == 0){
+      price = 0.01;
+    }
     int places = (log(price) / LN10).floor();
     int divider = 1;
     if (places <= 0) return 1;

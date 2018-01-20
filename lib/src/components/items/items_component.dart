@@ -6,7 +6,9 @@ import 'package:boardytale_heroes/src/components/items/item_preview_component.da
 import 'package:boardytale_heroes/src/components/items/new_item_component.dart';
 import 'package:boardytale_heroes/src/components/items/new_weapon_component.dart';
 import 'package:boardytale_heroes/src/model/model.dart';
+import 'package:boardytale_heroes/src/services/heroes_service.dart';
 import 'package:boardytale_heroes/src/services/items_service.dart';
+import 'package:boardytale_heroes/src/services/shops_service.dart';
 
 @Component(
   selector: 'items',
@@ -34,6 +36,10 @@ import 'package:boardytale_heroes/src/services/items_service.dart';
         <th>Zbroj</th>
         <th>+HP</th>
         <th>+Mana</th>
+        <th *ngIf="heroesService.selected != null"></th>
+        <th *ngIf="shopsService.selected != null"></th>
+        <th></th>
+        <th></th>
       </tr>
       <tr *ngFor="let item of notWeapons" [ngClass]="{
       'bodyItem': item.type=='body',
@@ -53,6 +59,10 @@ import 'package:boardytale_heroes/src/services/items_service.dart';
         <td>{{item.armorPoints}}</td>
         <td>{{item.healthBonus}}</td>
         <td>{{item.manaBonus}}</td>
+        <td *ngIf="heroesService.selected != null" (click)="addToHero(item)" class="table-button">+h</td>
+        <td *ngIf="shopsService.selected != null" (click)="addToShop(item)" class="table-button">+o</td>
+        <td (click)="delete(item)" class="table-button">X</td>
+        <td (click)="edit(item)" class="table-button">e</td>
       </tr>
     </table>
     
@@ -75,6 +85,10 @@ import 'package:boardytale_heroes/src/services/items_service.dart';
         <th>Zbroj</th>
         <th>+HP</th>
         <th>+Mana</th>
+        <th *ngIf="heroesService.selected != null">+h</th>
+        <th *ngIf="shopsService.selected != null"></th>
+        <th></th>
+        <th></th>
       </tr>
       <tr *ngFor="let item of weapons">
         <td>{{item.name}}</td>
@@ -94,6 +108,10 @@ import 'package:boardytale_heroes/src/services/items_service.dart';
         <td>{{item.armorPoints}}</td>
         <td>{{item.healthBonus}}</td>
         <td>{{item.manaBonus}}</td>
+        <td *ngIf="heroesService.selected != null" (click)="addToHero(item)" class="table-button">+h</td>
+        <td *ngIf="shopsService.selected != null" (click)="addToShop(item)" class="table-button">+o</td>
+        <td (click)="delete(item)" class="table-button">X</td>
+        <td (click)="edit(item)" class="table-button">e</td>
       </tr>
     </table>
   ''',
@@ -107,6 +125,8 @@ import 'package:boardytale_heroes/src/services/items_service.dart';
 )
 class ItemsComponent implements OnInit {
   final ItemsService itemsService;
+  final HeroesService heroesService;
+  final ShopsService shopsService;
   List<Item> items = [];
 
   List<Item> get notWeapons =>
@@ -122,17 +142,21 @@ class ItemsComponent implements OnInit {
   bool get itemIsEdited =>
       itemsService.editingItem != null && itemsService.editingItem is! Weapon;
 
-  ItemsComponent(this.itemsService);
+  ItemsComponent(
+    this.itemsService,
+    this.heroesService,
+    this.shopsService,
+  );
 
   void onNewItem() {
     createItemActive = false;
     createWeaponActive = false;
   }
 
-  String priceIsWrongClass(Item item){
+  String priceIsWrongClass(Item item) {
     int diff = item.suggestedPrice - item.recommendedPrice;
-    if(diff<0) diff*=-1;
-    return diff/(item.recommendedPrice+0.001) > 0.5 ? "price_is_wrong":"";
+    if (diff < 0) diff *= -1;
+    return diff / (item.recommendedPrice + 0.001) > 0.5 ? "price_is_wrong" : "";
   }
 
   @override
@@ -141,5 +165,33 @@ class ItemsComponent implements OnInit {
     itemsData.listen((List<Item> items) {
       this.items = items;
     });
+  }
+
+  void addToHero(Item item) {
+    heroesService.selected.items.add(item);
+    heroesService.createOrEditHero(heroesService.selected);
+  }
+
+  void addToShop(Item item) {
+    ShopItem shopItem = shopsService.selected.items
+        .firstWhere((ShopItem shopItem) => shopItem.item == item, orElse: () {
+      ShopItem newItem = new ShopItem()
+        ..quantity = 0
+        ..item = item
+        ..price = item.suggestedPrice
+      ;
+      shopsService.selected.items.add(newItem);
+      return newItem;
+    });
+    shopItem.quantity++;
+    shopsService.createShop(shopsService.selected);
+  }
+
+  void delete(Item item) {
+    itemsService.delete(item);
+  }
+
+  void edit(Item item) {
+    itemsService.editingItem = item;
   }
 }
