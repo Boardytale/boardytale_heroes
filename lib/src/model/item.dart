@@ -26,8 +26,16 @@ class Item {
   num precisionBonus = 0;
   num energyBonus = 0;
   num suggestedPrice = 100;
+  int _recommendedPrice = null;
 
   Item() {}
+
+  int get recommendedPrice{
+    if(_recommendedPrice==null){
+      _recommendedPrice = ShopHelper.recommendPrice(this);
+    }
+    return _recommendedPrice;
+  }
 
   String getType() {
     return {
