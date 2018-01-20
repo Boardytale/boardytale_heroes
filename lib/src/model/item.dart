@@ -23,8 +23,8 @@ class Item {
   num agilityBonus = 0;
   num intelligenceBonus = 0;
   num spiritualityBonus = 0;
-  num precisionBonus = 0;
   num energyBonus = 0;
+  num precisionBonus = 0;
   num suggestedPrice = 100;
   int _recommendedPrice = null;
 
