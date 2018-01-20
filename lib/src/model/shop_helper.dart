@@ -59,9 +59,10 @@ class ShopHelper {
   }
 
   static double _recommendWeaponPrice(Weapon weapon) {
-    double effectivePrice = weapon.effectiveAgility * effectiveAgilityPrice +
-        weapon.effectiveStrength * effectiveStrengthPrice +
-        weapon.effectiveIntelligence * effectiveIntelligencePrice;
+//    double effectivePrice = weapon.effectiveAgility * effectiveAgilityPrice +
+//        weapon.effectiveStrength * effectiveStrengthPrice +
+//        weapon.effectiveIntelligence * effectiveIntelligencePrice;
+    double effectivePrice = 1.0;
     double effectiveCoefficient = 1000 / (effectivePrice + 1000);
     double price = weapon.baseAttack[1] * index1AttackPrice +
         weapon.baseAttack[2] * index2AttackPrice +
