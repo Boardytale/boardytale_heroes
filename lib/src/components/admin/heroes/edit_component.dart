@@ -5,7 +5,6 @@ import 'package:angular_components/material_input/material_number_accessor.dart'
 import 'package:angular_forms/src/directives.dart';
 import 'package:boardytale_heroes/src/components/shared/buttoned_number_input_component.dart';
 import 'package:boardytale_heroes/src/services/heroes_service.dart';
-import 'package:boardytale_heroes/src/services/items_service.dart';
 import 'package:boardytale_heroes/src/model/model.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_forms/angular_forms.dart';

@@ -1,0 +1,40 @@
+<admin-nav-component></admin-nav-component>
+<div class="container">
+    <br><br>
+    <div class="row">
+        <div class="col-lg-3">
+            <h1 class="my-4">Obchody</h1>
+            <div class="list-group">
+                <a
+                        *ngFor="let shop of shops"
+                        href="#"
+                        class="list-group-item"
+                        (click)="selectShop(shop)"
+                        [ngClass]="{'active': shop == shopsService.selected}"
+                >{{shop.name}}</a>
+                <a href="#" class="list-group-item" (click)="createShop()">Vytvořit obchod</a>
+                <a href="#" class="list-group-item" (click)="itemsVisible = !itemsVisible">{{itemsVisible?"Skrýt všechny předměty": "Zobrazit všechny předměty"}}</a>
+            </div>
+            <h1 class="my-4">Postavy</h1>
+            <div class="list-group">
+                <a
+                        *ngFor="let hero of heroes"
+                        href="#"
+                        class="list-group-item"
+                        (click)="selectHero(hero)"
+                        [ngClass]="{'active': heroesService.selected?.id == hero?.id}"
+                >{{hero.name}}</a>
+
+                <a class="list-group-item" href="javascript:" (click)="create()">nový hrdina</a>
+            </div>
+        </div>
+        <div class="col-lg-9">
+            <br>
+            <heroes *ngIf="authService.user != null">
+            </heroes>
+            <br>
+            <items *ngIf="itemsVisible"></items>
+            <edit-shop *ngIf="shopsService.selected != null"></edit-shop>
+        </div>
+    </div>
+</div>
