@@ -39,6 +39,7 @@ import 'package:boardytale_heroes/src/services/shops_service.dart';
 @RouteConfig(const [
   const Route(path: '/shops', name: 'Shops', component: ShopsComponent, useAsDefault: true),
   const Route(path: '/heroes', name: 'Heroes', component: HeroesComponent),
+  const Route(path: '/items', name: 'Items', component: ItemsComponent),
 ])
 class AdminComponent {
   final ShopsService shopsService;
