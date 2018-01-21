@@ -12,6 +12,29 @@ body {
     font-family: Roboto, Helvetica, Arial, sans-serif;
 }
 
+nav {
+    height: 35px;
+}
+
+.nav-link {
+    font-size: 9pt !important;
+    width: 70px;
+    text-align: center;
+    border-right: 1px solid white;
+}
+
+.nav-link.router-link-active {
+    text-decoration: underline;
+}
+
+.nav-item:first-of-type {
+    border-left: 1px solid white;
+}
+
+.under-nav {
+    margin-top: 35px;
+}
+
 .item-preview {
     border: 1px solid black;
     margin: 1px;

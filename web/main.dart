@@ -1,6 +1,6 @@
 import 'package:angular/angular.dart';
 import 'package:angular_router/angular_router.dart';
-import 'package:boardytale_heroes/app_component.dart';
+import 'package:boardytale_heroes/root_component.dart';
 import 'package:firebase/src/top_level.dart';
 
 void main() {
@@ -11,7 +11,7 @@ void main() {
     storageBucket: "boardytale-heroes.appspot.com",
     projectId: "boardytale-heroes",
   );
-  bootstrap(AppComponent, [
+  bootstrap(RootComponent, [
     ROUTER_PROVIDERS,
     // Remove next line in production
     provide(LocationStrategy, useClass: HashLocationStrategy),

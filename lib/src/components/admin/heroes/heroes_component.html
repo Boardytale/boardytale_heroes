@@ -1,0 +1,20 @@
+<div class="row">
+    <div class="col-lg-3">
+        <h1 class="my-4">Postavy</h1>
+        <div class="list-group">
+            <a
+                    *ngFor="let hero of heroes"
+                    href="javascript:"
+                    class="list-group-item"
+                    (click)="selectHero(hero)"
+                    [ngClass]="{'active': heroesService.selected?.id == hero?.id}"
+            >{{hero.name}}</a>
+            <a class="list-group-item" href="javascript:" (click)="create()">nový hrdina</a>
+        </div>
+    </div>
+    <div class="col-lg-9">
+        <div *ngIf="heroesService.selected != null">
+            <edit-hero *ngIf="heroesService.selected != null" [hero]="heroesService.selected"></edit-hero>
+        </div>
+    </div>
+</div>

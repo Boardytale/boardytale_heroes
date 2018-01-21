@@ -3,11 +3,13 @@ import 'dart:async';
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:angular_forms/angular_forms.dart';
+import 'package:angular_router/angular_router.dart';
 import 'package:boardytale_heroes/src/components/shared/buttoned_number_input_component.dart';
 import 'package:boardytale_heroes/src/model/model.dart';
 import 'package:boardytale_heroes/src/services/auth_service.dart';
 import 'package:boardytale_heroes/src/services/heroes_service.dart';
 import 'package:boardytale_heroes/src/services/shops_service.dart';
+import 'package:ng_bootstrap/ng_bootstrap.dart';
 
 @Component(
   selector: 'admin-nav-component',
@@ -17,7 +19,9 @@ import 'package:boardytale_heroes/src/services/shops_service.dart';
     materialDirectives,
     materialNumberInputDirectives,
     formDirectives,
-    ButtonedNumberInputComponent
+    ButtonedNumberInputComponent,
+    BS_DIRECTIVES,
+    ROUTER_DIRECTIVES,
   ],
   providers: const [
     materialProviders,

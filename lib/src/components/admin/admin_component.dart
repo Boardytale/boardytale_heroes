@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:angular_forms/angular_forms.dart';
+import 'package:angular_router/angular_router.dart';
 import 'package:boardytale_heroes/src/components/admin/heroes/heroes_component.dart';
 import 'package:boardytale_heroes/src/components/admin/items/items_component.dart';
 import 'package:boardytale_heroes/src/components/admin/nav/nav_component.dart';
@@ -25,7 +26,8 @@ import 'package:boardytale_heroes/src/services/shops_service.dart';
     materialDirectives,
     materialNumberInputDirectives,
     formDirectives,
-    ButtonedNumberInputComponent
+    ButtonedNumberInputComponent,
+    ROUTER_DIRECTIVES,
   ],
   providers: const [
     materialProviders,
@@ -34,13 +36,14 @@ import 'package:boardytale_heroes/src/services/shops_service.dart';
     ShopsService,
   ],
 )
-class AdminComponent implements OnInit {
+@RouteConfig(const [
+  const Route(path: '/shops', name: 'Shops', component: ShopsComponent, useAsDefault: true),
+  const Route(path: '/heroes', name: 'Heroes', component: HeroesComponent),
+])
+class AdminComponent {
   final ShopsService shopsService;
   final HeroesService heroesService;
   AuthService authService;
-  List<Hero> heroes = [];
-  List<Shop> shops = [];
-  bool itemsVisible = true;
 
   AdminComponent(
     this.authService,
@@ -48,34 +51,34 @@ class AdminComponent implements OnInit {
     this.shopsService,
   );
 
-  @override
-  Future<Null> ngOnInit() async {
-    authService.onUserData.stream.listen((_) async {
-      Stream<List<Hero>> heroesData = await this.heroesService.getHeroes();
-      heroesData.listen((List<Hero> heroes) {
-        this.heroes = heroes;
-      });
-
-      Stream<List<Shop>> shopsData = await this.shopsService.getShops();
-      shopsData.listen((List<Shop> shops) {
-        this.shops = shops;
-      });
-    });
-  }
-
-  void createShop() {
-    shopsService.selected = new Shop();
-  }
-
-  void selectShop(shop) {
-    shopsService.selected = shop;
-  }
-
-  void create() {
-    heroesService.selected = new Hero();
-  }
-
-  void selectHero(Hero hero) {
-    heroesService.selected = hero;
-  }
+//  @override
+//  Future<Null> ngOnInit() async {
+//    authService.onUserData.stream.listen((_) async {
+//      Stream<List<Hero>> heroesData = await this.heroesService.getHeroes();
+//      heroesData.listen((List<Hero> heroes) {
+//        this.heroes = heroes;
+//      });
+//
+//      Stream<List<Shop>> shopsData = await this.shopsService.getShops();
+//      shopsData.listen((List<Shop> shops) {
+//        this.shops = shops;
+//      });
+//    });
+//  }
+//
+//  void createShop() {
+//    shopsService.selected = new Shop();
+//  }
+//
+//  void selectShop(shop) {
+//    shopsService.selected = shop;
+//  }
+//
+//  void create() {
+//    heroesService.selected = new Hero();
+//  }
+//
+//  void selectHero(Hero hero) {
+//    heroesService.selected = hero;
+//  }
 }
