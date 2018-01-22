@@ -19,7 +19,6 @@ import 'package:angular_forms/angular_forms.dart';
     CORE_DIRECTIVES,
     formDirectives
   ],
-  providers: const [ItemsService],
 )
 class ButtonedNumberInputComponent {
   int _value = 1;

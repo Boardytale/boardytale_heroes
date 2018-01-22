@@ -7,7 +7,7 @@
                     href="javascript:"
                     class="list-group-item"
                     (click)="selectShop(shop)"
-                    [ngClass]="{'active': shop == shopsService.selected}"
+                    [ngClass]="{'active': shop.id == shopsService?.selected?.id}"
             >{{shop.name}}</a>
             <a href="#" class="list-group-item" (click)="createShop()">Vytvořit obchod</a>
             <!--<a href="#" class="list-group-item" (click)="itemsVisible = !itemsVisible">{{itemsVisible?"Skrýt všechny předměty": "Zobrazit všechny předměty"}}</a>-->

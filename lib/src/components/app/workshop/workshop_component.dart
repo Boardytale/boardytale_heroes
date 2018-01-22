@@ -11,8 +11,5 @@ import 'package:boardytale_heroes/src/components/app/nav/nav_component.dart';
     materialDirectives,
     materialNumberInputDirectives,
   ],
-  providers: const [
-    materialProviders,
-  ],
 )
 class WorkshopComponent {}

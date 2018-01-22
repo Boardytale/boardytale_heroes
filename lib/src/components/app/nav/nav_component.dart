@@ -16,10 +16,6 @@ import 'package:boardytale_heroes/src/services/auth_service.dart';
     ButtonedNumberInputComponent,
     ROUTER_DIRECTIVES,
   ],
-  providers: const [
-    materialProviders,
-    AuthService,
-  ],
 )
 class NavComponent {
   AuthService authService;

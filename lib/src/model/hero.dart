@@ -81,7 +81,7 @@ class Hero {
     return out;
   }
 
-  fromMap(Map<String, dynamic> data, ItemsService itemsService) {
+  void fromMap(Map<String, dynamic> data, ItemsService itemsService) {
     userId = data["userId"];
     name = data["name"];
     agility = data["agility"];
@@ -89,7 +89,6 @@ class Hero {
       agility = 1;
     }
     strength = data["strength"];
-//    intelligence = data["intelligence"];
     if(strength<1){
       strength = 1;
     }
@@ -132,9 +131,6 @@ class Hero {
     if (strength == null) {
       strength = 1;
     }
-//    if (intelligence == null) {
-//      intelligence = 1;
-//    }
     if (spirituality == null) {
       spirituality = 1;
     }

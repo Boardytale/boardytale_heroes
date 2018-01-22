@@ -11,10 +11,7 @@ class ShopsService {
   Item editingItem;
   Shop selected;
   ItemsService itemsService;
-
-  ShopsService(this.itemsService){
-    print("items service created");
-  }
+  ShopsService(this.itemsService);
 
   Future<DocumentReference> createShop(Shop shop) async {
     if(shop.id != null) {

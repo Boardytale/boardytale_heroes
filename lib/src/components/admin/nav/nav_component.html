@@ -31,7 +31,7 @@
 
         <bs-dropdown (on-toggle)="toggled($event)">
             <a href="javascript:" id="simple-dropdown" class="dropdown-toggle">
-                Postavy
+                {{heroesService.selected == null? "Vyber postavu": heroesService.selected.name}}
             </a>
             <ul class="dropdown-menu" aria-labelledby="simple-dropdown">
                 <li

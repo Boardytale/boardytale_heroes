@@ -18,9 +18,6 @@ import 'package:boardytale_heroes/src/components/app/workshop/workshop_component
     materialNumberInputDirectives,
     ROUTER_DIRECTIVES,
   ],
-  providers: const [
-    materialProviders,
-  ],
 )
 @RouteConfig(const [
   const Route(path: '/game', name: 'Game', component: GameComponent, useAsDefault: true),

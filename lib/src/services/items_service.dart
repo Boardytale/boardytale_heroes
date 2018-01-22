@@ -9,10 +9,6 @@ import 'package:firebase/src/firestore.dart';
 class ItemsService {
   Item editingItem;
 
-  ItemsService() {
-    print("items service created");
-  }
-
   Future<DocumentReference> createItem(Item item) async {
     if (item.id != "noid") {
       return firestore()
@@ -60,15 +56,6 @@ class ItemsService {
       }
     }).first;
   }
-
-//  Future<Map<String, Item>> getItemsMap() async{
-//    Map<String, Item> out = {};
-//
-//    (await getItems()).forEach((Item item){
-////      out[item.id] = item;
-//    });
-//    return out;
-//  }
 
   Item _getItemByData(Map data) {
     if (!Item.itemTypes.contains(data["type"])) {

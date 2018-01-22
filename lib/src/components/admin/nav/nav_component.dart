@@ -23,12 +23,6 @@ import 'package:ng_bootstrap/ng_bootstrap.dart';
     BS_DIRECTIVES,
     ROUTER_DIRECTIVES,
   ],
-  providers: const [
-    materialProviders,
-    AuthService,
-    HeroesService,
-    ShopsService,
-  ],
 )
 class AdminNavComponent implements OnInit {
   final ShopsService shopsService;

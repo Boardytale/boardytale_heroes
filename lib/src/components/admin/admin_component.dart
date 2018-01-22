@@ -29,12 +29,6 @@ import 'package:boardytale_heroes/src/services/shops_service.dart';
     ButtonedNumberInputComponent,
     ROUTER_DIRECTIVES,
   ],
-  providers: const [
-    materialProviders,
-    AuthService,
-    HeroesService,
-    ShopsService,
-  ],
 )
 @RouteConfig(const [
   const Route(path: '/shops', name: 'Shops', component: ShopsComponent, useAsDefault: true),
