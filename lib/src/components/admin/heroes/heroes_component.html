@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" *ngIf="!isInTest">
     <div class="col-lg-3">
         <h1 class="my-4">Postavy</h1>
         <div class="list-group">
@@ -11,6 +11,7 @@
             >{{hero.name}}</a>
             <a class="list-group-item" href="javascript:" (click)="create()">nový hrdina</a>
         </div>
+        <button (click)="isInTest = true;">Testuj hrdiny</button>
     </div>
     <div class="col-lg-9">
         <div *ngIf="heroesService.selected != null">
@@ -18,3 +19,5 @@
         </div>
     </div>
 </div>
+<button (click)="isInTest = false;" *ngIf="isInTest">Ukončit testování hrdinů</button>
+<hero-test *ngIf="isInTest"></hero-test>

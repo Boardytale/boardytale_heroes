@@ -15,3 +15,4 @@ part 'item_sum.dart';
 part 'shop.dart';
 part 'calculations.dart';
 part 'shop_helper.dart';
+part 'hero_test.dart';
