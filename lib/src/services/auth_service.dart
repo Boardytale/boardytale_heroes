@@ -35,6 +35,8 @@ class AuthService {
         }
         onUserData.add(userData);
         userLoaded = true;
+      }, onError: (){
+        print("error in create new user data");
       });
     });
   }

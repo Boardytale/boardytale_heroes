@@ -31,23 +31,16 @@ class Shop {
   }
 }
 
-class ShopItem {
-  Item item;
-  String itemId;
-  int quantity = 1;
+class ShopItem extends Items {
   num price = 10;
 
   Map toMap() {
     Map out = {};
-    out["item"] = item.id;
-    out["quantity"] = quantity;
     out["price"] = price.toInt();
     return out;
   }
 
   void fromMap(Map data) {
-    quantity = data["quantity"];
     price = data["price"];
-    itemId = data["item"];
   }
 }
