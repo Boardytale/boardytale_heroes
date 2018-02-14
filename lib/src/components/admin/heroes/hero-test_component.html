@@ -1,0 +1,52 @@
+<div class="row">
+    <div class="col-lg-3">
+        <h1 class="my-4">Hero1</h1>
+        <div class="list-group">
+            <a
+                    *ngFor="let hero of heroes"
+                    href="javascript:"
+                    class="list-group-item"
+                    (click)="selectHero1(hero)"
+                    [ngClass]="{'active': hero1?.id == hero?.id}"
+            >{{hero.name}}</a>
+        </div>
+        <div *ngIf="hero1!=null">
+            <table>
+                <tr><td>Životy</td><td>{{hero1.getState().health}}</td></tr>
+                <tr><td>Armor</td><td>{{hero1.getState().armor}}</td></tr>
+                <tr><td>Útok</td><td>{{hero1.getState().attack}}</td></tr>
+                <tr><td>Rychlost</td><td>{{hero1.getState().speed}}</td></tr>
+            </table>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <h1 class="my-4">Hero2</h1>
+        <div class="list-group">
+            <a
+                    *ngFor="let hero of heroes"
+                    href="javascript:"
+                    class="list-group-item"
+                    (click)="selectHero2(hero)"
+                    [ngClass]="{'active': hero2?.id == hero?.id}"
+            >{{hero.name}}</a>
+            <div *ngIf="hero2!=null">
+                <table>
+                    <tr><td>Životy</td><td>{{hero2.getState().health}}</td></tr>
+                    <tr><td>Armor</td><td>{{hero2.getState().armor}}</td></tr>
+                    <tr><td>Útok</td><td>{{hero2.getState().attack}}</td></tr>
+                    <tr><td>Rychlost</td><td>{{hero2.getState().speed}}</td></tr>
+                </table>
+            </div>
+        </div>
+        <div *ngIf="isCurrent">
+            <table>
+                <tr><td></td>                       <td>Šance na vítězství Hrdiny 1</td><td>Šance na vítězství Hrdiny 2</td></tr>
+                <tr><td>Hrdina 1 útočí první</td>   <td>{{win1ChanceFirst}}%</td>        <td>{{win2ChanceFirst}}%</td></tr>
+                <tr><td>Hrdina 2 útočí první</td>   <td>{{win1ChanceSecond}}%</td>       <td>{{win2ChanceSecond}}%</td></tr>
+            </table>
+        </div>
+        <div *ngIf="!isCurrent">
+            <button (click)="getTestResults()" [disabled]="hero1==null || hero2==null" >Otestuj! </button>
+        </div>
+    </div>
+</div>

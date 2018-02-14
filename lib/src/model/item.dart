@@ -88,3 +88,21 @@ class Item {
     };
   }
 }
+
+class Items {
+  Item item;
+  String itemId;
+  int quantity = 1;
+
+  Map toMap() {
+    Map out = {};
+    out["item"] = item.id;
+    out["quantity"] = quantity;
+    return out;
+  }
+
+  void fromMap(Map data) {
+    quantity = data["quantity"];
+    itemId = data["item"];
+  }
+}

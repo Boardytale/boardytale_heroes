@@ -2,34 +2,34 @@ import 'dart:async';
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:boardytale_heroes/src/components/admin/heroes/edit_component.dart';
-import 'package:boardytale_heroes/src/components/admin/heroes/hero_test_component.dart';
-import 'package:boardytale_heroes/src/components/admin/items/item_preview_component.dart';
-import 'package:boardytale_heroes/src/components/admin/items/new_item_component.dart';
-import 'package:boardytale_heroes/src/components/admin/items/new_weapon_component.dart';
 import 'package:boardytale_heroes/src/model/model.dart';
 import 'package:boardytale_heroes/src/services/auth_service.dart';
 import 'package:boardytale_heroes/src/services/heroes_service.dart';
 
 @Component(
-  selector: 'heroes',
-  templateUrl: 'heroes_component.html',
+  selector: 'hero-test',
+  templateUrl: 'hero-test_component.html',
   directives: const [
     CORE_DIRECTIVES,
     materialDirectives,
-    NewItemComponent,
-    NewWeaponComponent,
-    ItemPreviewComponent,
-    EditHeroComponent,
-    TestHeroComponent
+    EditHeroComponent
   ],
 )
-class HeroesComponent implements OnInit {
+class TestHeroComponent implements OnInit {
   final HeroesService heroesService;
   final AuthService authService;
   List<Hero> heroes = [];
-  bool isInTest = false;
 
-  HeroesComponent(
+  Hero hero1;
+  Hero hero2;
+  HeroTest test;
+  bool isCurrent = false;
+  double win1ChanceFirst;
+  double win2ChanceFirst;
+  double win1ChanceSecond;
+  double win2ChanceSecond;
+
+  TestHeroComponent(
     this.authService,
     this.heroesService,
   );
@@ -44,11 +44,23 @@ class HeroesComponent implements OnInit {
     });
   }
 
-  void create() {
-    heroesService.selected = new Hero();
+  void selectHero1(Hero hero) {
+    hero1 = hero;
+    isCurrent = false;
+    if(hero2!=null)test = new HeroTest(hero1.getState(), hero2.getState());
   }
 
-  void selectHero(Hero hero) {
-    heroesService.selected = hero;
+  void selectHero2(Hero hero) {
+    hero2 = hero;
+    isCurrent = false;
+    if(hero1!=null)test = new HeroTest(hero1.getState(), hero2.getState());
+  }
+
+  void getTestResults(){
+    win1ChanceFirst  = (test.getChance(0)*10000).round()/100;
+    win1ChanceSecond = (test.getChance(1)*10000).round()/100;
+    win2ChanceFirst  = 100.0 - win1ChanceFirst;
+    win2ChanceSecond = 100.0 - win1ChanceSecond;
+    isCurrent = true;
   }
 }
