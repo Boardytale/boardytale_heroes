@@ -17,11 +17,11 @@ class HeroState {
   num speed = 1;
   num mana = 0;
   num health;
-  List<int> ownAttack =        [0, 0, 0, 0, 0, 0];
-  List<int> maxAttack =        [0, 0, 0, 0, 0, 0];
-  List<int> itemAttack =       [0, 0, 0, 0, 0, 0];
-  List<int> itemBonusAttack =  [0, 0, 0, 0, 0, 0];
-  List<int> attack =           [0, 0, 0, 0, 0, 0];
+  List<int> ownAttack = [0, 0, 0, 0, 0, 0];
+  List<int> maxAttack = [0, 0, 0, 0, 0, 0];
+  List<int> itemAttack = [0, 0, 0, 0, 0, 0];
+  List<int> itemBonusAttack = [0, 0, 0, 0, 0, 0];
+  List<int> attack = [0, 0, 0, 0, 0, 0];
 
   HeroState(this.hero) {
     ItemSum items = hero.getItemSum();
@@ -38,10 +38,11 @@ class HeroState {
     level = Calculations.levelForExperience(hero.experience);
     armor = Calculations.getArmor(effectiveAgility, items.armorPoints);
     speed = Calculations.getSpeed(itemWeight, weightLimit);
-    itemAttack = hero.getWeapon()== null ? [0,0,0,0,0,0] : hero.getWeapon().baseAttack;
-    itemBonusAttack = hero.getWeapon()== null ? [0,0,0,0,0,0] : hero.getWeapon().bonusAttack;
-    attack = Calculations.sumAttacks(itemBonusAttack, Calculations.capAttack(Calculations.sumAttacks(ownAttack, itemAttack), maxAttack));
+    itemAttack = hero.getWeapon() == null ? [0, 0, 0, 0, 0, 0] : hero.getWeapon().baseAttack;
+    itemBonusAttack = hero.getWeapon() == null ? [0, 0, 0, 0, 0, 0] : hero.getWeapon().bonusAttack;
+    attack = Calculations.sumAttacks(
+        itemBonusAttack, Calculations.capAttack(Calculations.sumAttacks(ownAttack, itemAttack), maxAttack));
     health = baseHealth + items.healthBonus;
-    mana = 10*_effectiveEnergy+items.manaBonus;
+    mana = 10 * _effectiveEnergy + items.manaBonus;
   }
 }

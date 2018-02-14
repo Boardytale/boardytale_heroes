@@ -52,7 +52,7 @@ class ItemsComponent implements OnInit {
   }
 
   String priceIsWrongClass(Item item) {
-    int diff = item.suggestedPrice - item.recommendedPrice;
+    num diff = item.suggestedPrice - item.recommendedPrice;
     if (diff < 0) diff *= -1;
     return diff / (item.recommendedPrice + 0.001) > 0.5 ? "price_is_wrong" : "";
   }
