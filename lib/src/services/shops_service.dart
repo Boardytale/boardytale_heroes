@@ -21,7 +21,7 @@ class ShopsService {
     }
   }
 
-  Future<Stream<List<Shop>>> getShops() async {
+  Stream<List<Shop>> getShops() {
     return firestore()
         .collection('shops')
         .onSnapshot

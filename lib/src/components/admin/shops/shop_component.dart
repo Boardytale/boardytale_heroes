@@ -33,12 +33,12 @@ class ShopsComponent implements OnInit {
 
   @override
   Future<Null> ngOnInit() async {
-    authService.onUserData.stream.listen((_) async {
-      Stream<List<Shop>> shopsData = await this.shopsService.getShops();
-      shopsData.listen((List<Shop> shops) {
-        this.shops = shops;
-      });
+    Stream<List<Shop>> shopsData = await this.shopsService.getShops();
+    shopsData.listen((List<Shop> shops) {
+      this.shops = shops;
     });
+//    authService.onUserData.stream.listen((_) async {
+//    });
   }
 
   void selectShop(shop) {
