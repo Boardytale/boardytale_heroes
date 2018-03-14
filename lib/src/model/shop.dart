@@ -35,12 +35,13 @@ class ShopItem extends Items {
   num price = 10;
 
   Map toMap() {
-    Map out = {};
+    Map out = super.toMap();
     out["price"] = price.toInt();
     return out;
   }
 
   void fromMap(Map data) {
     price = data["price"];
+    super.fromMap(data);
   }
 }

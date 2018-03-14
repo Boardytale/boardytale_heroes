@@ -41,7 +41,7 @@ class ShopsComponent implements OnInit {
 //    });
   }
 
-  void selectShop(shop) {
+  void selectShop(Shop shop) {
     shopsService.selected = shop;
   }
 
